@@ -6,7 +6,7 @@ import router from './router'
 import store from './vuex/store';
 import Vuex from 'vuex';
 import MintUI from 'mint-ui'
-// import 'mint-ui/lib/style.css'
+import 'mint-ui/lib/style.css'
 import 'swiper/dist/css/swiper.min.css'
 
 Vue.use(MintUI)

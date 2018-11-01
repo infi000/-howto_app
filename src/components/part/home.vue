@@ -1,8 +1,12 @@
 <template>
   <div class="page-home">
+      <div class="header">
+      <dom-search class="dom-search"></dom-search>
+    </div>
     <!-- 轮播图 -->
     <dom-banner></dom-banner>
     <!-- 内容 -->
+
     <div class="con-home">
       <div class="tag-title-home">
         <div class="weui-flex">
@@ -12,11 +16,12 @@
           <div class="weui-flex__item">
           </div>
           <div>
-            <span class="tag-title-home-r">更多 <img :src="imgSrc.right" alt="" class="icon-right"></span>
+            <!-- <span class="tag-title-home-r">更多 <img :src="imgSrc.right" alt="" class="icon-right"></span> -->
           </div>
         </div>
       </div>
-      <dom-groupboxmini v-for="item in 2" class="dom-groupboxmini"></dom-groupboxmini>
+
+      <dom-groupboxmini class="dom-groupboxmini" v-for="(item,index) in 2" :key="index"></dom-groupboxmini>
       <!-- 推荐视频 -->
       <div class="tag-title-home">
         <div class="weui-flex">
@@ -26,16 +31,17 @@
           <div class="weui-flex__item">
           </div>
           <div>
-            <span class="tag-title-home-r">更多 <img :src="imgSrc.right" alt="" class="icon-right"></span>
+            <!-- <span class="tag-title-home-r">更多 <img :src="imgSrc.right" alt="" class="icon-right"></span> -->
           </div>
         </div>
       </div>
+
       <div class="weui-flex">
-        <div class="weui-flex__item"  v-for="item in 3">
-          <dom-videobox class="dom-videobox"></dom-videobox>
+        <div class="weui-flex__item" v-for="(item,index) in 3" :key="index">
+          <dom-videoboxh></dom-videoboxh>
         </div>
       </div>
-        <!-- 精彩视频 -->
+      <!-- 精彩视频 -->
       <div class="tag-title-home">
         <div class="weui-flex">
           <div>
@@ -44,18 +50,23 @@
           <div class="weui-flex__item">
           </div>
           <div>
-            <span class="tag-title-home-r">更多 <img :src="imgSrc.right" alt="" class="icon-right"></span>
+            <!-- <span class="tag-title-home-r">更多 <img :src="imgSrc.right" alt="" class="icon-right"></span> -->
           </div>
         </div>
       </div>
+
+      <dom-videoboxw v-for="(item,index) in [9,8,7]" :key="item" class="dom-videoboxw"></dom-videoboxw>
     </div>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
+import domSearch from "@/components/widget/search";
+
 import domBanner from "@/components/common/banner";
 import domGroupboxmini from "@/components/widget/groupboxmini";
-import domVideobox from "@/components/widget/videobox";
+import domVideoboxh from "@/components/widget/videoboxh";
+import domVideoboxw from "@/components/widget/videoboxw";
 import right from "@/assets/right.png";
 export default {
   props: [],
@@ -86,9 +97,11 @@ export default {
 
   },
   components: {
+    domSearch,
     domBanner,
     domGroupboxmini,
-    domVideobox
+    domVideoboxh,
+    domVideoboxw,
   },
   created() {
 
@@ -104,7 +117,13 @@ export default {
 .page-home {
   padding-top: 156px;
 }
+.header {
+  height: 156px;
+}
 
+.dom-search {
+  margin-top: 46px;
+}
 
 .con-home {
   width: 687px;
@@ -139,6 +158,9 @@ export default {
 
 .dom-groupboxmini {
   margin-bottom: 70px;
+}
+.dom-videoboxw {
+  margin-bottom: 36px;
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-
+<div>me</div>
 </template>
 <script>
 /*jshint esversion: 6 */

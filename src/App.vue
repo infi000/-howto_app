@@ -17,7 +17,11 @@ export default {
   text-align: center;
   color: #303133;
 }
-
+.mint-header{
+  background-color: #e4413c;
+  height: 66px;
+  font-size: 34px;
+}
 .page {
   position: absolute;
   top: 0;
@@ -43,5 +47,16 @@ export default {
   text-align: left;
 }.text-right{
   text-align: right;
+}
+
+.tag-con{
+  padding: 3px 5px;
+  border: 0.5px solid #666;
+  display: inline-block;
+}
+
+.icon-con{
+    height: 25px;
+    display: inline-block;
 }
 </style>
