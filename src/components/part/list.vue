@@ -1,16 +1,12 @@
 <template>
   <div class="page">
     <!-- header -->
-    <mt-header title="专栏列表">
-      <router-link to="/home" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-      </mt-button>
+    <mt-header :title="'专栏列表'">
+      <mt-button icon="back" slot="left" @click="back"></mt-button>
     </mt-header>
     <div class="list-con">
-
-
-      <dom-videoboxw v-for="(item,index) in [9,8,7]" :key="item" class="dom-videoboxw"></dom-videoboxw>
+      <dom-videoboxw v-for="(item,index) in listInfo.rs" :key="index" :info="item" class="dom-videoboxw"></dom-videoboxw>
+      <dom-nodata v-show="listInfo.rs.length==0"></dom-nodata>
     </div>
   </div>
 </template>
@@ -19,52 +15,71 @@
 
 // import aa from "@/components/widget/videoboxrank";
 import domVideoboxw from "@/components/widget/videoboxw";
+import domNodata from "@/components/widget/nodata";
 
 export default {
   props: [],
   data() {
-    return {   }
+    var type = this.$route.query.type;
+    var gid = this.$route.query.gid;
+    return {
+      type: type,
+      gid: gid,
+      listInfo: {
+        page: 1,
+        pagecount: 10,
+        rs: [],
+        total: "10",
+      }
+    }
   },
   computed: {
 
   },
   methods: {
-    // funname(){
-    //     var that=this;
-    //     var params={};
-    //     var sucf=function(d){
+    back() {
+      this.$router.go(-1);
+    },
+    getSourceGroup() {
+      var that = this;
+      var params = {
+        gid: this.gid
+      };
+      var sucf = function(d) {
+        that.listInfo=d;
+      };
+      var errf = function(d) {
 
-    //     };
-    //     var errf=function(d){
-
-    //     };
-    //     this.$store.commit('funname',{})
-    // }
+      };
+      this.$store.commit('getSourceGroup', { params: params, sucf: sucf })
+    }
   },
-  watch:{
+  watch: {
 
   },
   components: {
-domVideoboxw
+    domVideoboxw,domNodata
   },
   created() {
 
   },
   mounted() {
+    if (this.type == "group") {
+      this.getSourceGroup()
 
+    }
   }
 
 };
 
 </script>
-
 <style scoped>
-
 .list-con {
   padding: 40px;
 }
+
 .dom-videoboxw {
-  margin-bottom:18px;
+  margin-bottom: 18px;
 }
 
 </style>

@@ -48,6 +48,22 @@ export default {
 }.text-right{
   text-align: right;
 }
+.text-hide-1,
+.text-hide-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-break:break-all;
+}
+
+.text-hide-1 {
+  -webkit-line-clamp: 1;
+}
+
+.text-hide-2 {
+  -webkit-line-clamp: 2;
+}
 
 .tag-con{
   padding: 3px 5px;
@@ -59,4 +75,21 @@ export default {
     height: 25px;
     display: inline-block;
 }
+
+
+img[lazy=error] {
+  background-image: url('/static/img/error.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+img[lazy=loading] {
+  margin: 100px auto;
+  height: 80px!important;
+  vertical-align: middle;
+  width: 80px;
+}
+
 </style>

@@ -39,7 +39,15 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        options: {
+            presets: ['es2015']
+         },
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client'),resolve('node_modules/swiper'),resolve('node_modules/mint-ui')]
+      },
+            {
+        test: /\.css$/,
+        loader: 'url-loader',
+             include: [/src/,'/node_modules/mint-ui/lib']
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

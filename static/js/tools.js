@@ -1,7 +1,7 @@
 // 正式
 var URL_DEV = {
-  // yjw: 'http://www.howdu.cn/howapi/index.php?',
-  yjw: 'http://192.168.58.21/howto/index.php?',
+  yjw: 'http://www.howdu.cn/howapi/index.php?',
+  // yjw: 'http://192.168.58.21/howto/index.php?',
   jys: 'http://www.howdu.cn/wapi/i.php?',
   upload: 'http://upload.howdu.cn', //视频服务器
   video: 'http://video.howdu.cn', //视频服务器
@@ -40,6 +40,9 @@ var PARAMS = {
   getPayStatistics: 'm=Home&c=Pay&a=payStatistics', //获取付费统计
   getAccount: 'm=Home&c=Cash&a=account ', //获取账户金额
   getCashStatistics: 'm=Home&c=Cash&a=cashStatistics ', //获取账户金额
+  getGroup:'m=Home&c=Group&a=search',//查询专栏
+  getSourceGroup:'m=Home&c=SourceGroup&a=search',//查询专栏资源
+  getSourceShow:'m=Home&c=SourceShow&a=search',//查询资源
   getUploadParams: '50051', //获取上传视频所需信息
   // getUploadList: '50052', //获取上传文件列表
   // delUpload: '50053', //删除上传文件

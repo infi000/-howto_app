@@ -2,36 +2,35 @@
   <div class="page">
     <!-- header -->
     <mt-header title="排行榜">
-      <router-link to="/home" slot="left">
+      <!--      <router-link to="/home" slot="left">
         <mt-button icon="back"></mt-button>
-      </router-link>
-      </mt-button>
+      </router-link> -->
     </mt-header>
     <!-- navbar -->
     <div class="nav-rank">
       <div class="weui-flex">
         <div class="weui-flex__item">
-          <span style="color:red" v-if="choosed=='pop'">人气榜</span><span v-else>人气榜</span>
+          <span style="color:red" v-if="choosed=='pop'">人气榜</span><span @click="handleChangeShow(4,'pop')" v-else>人气榜</span>
         </div>
         <div class="weui-flex__item">
-          <span style="color:red" v-if="choosed=='hot'">今日最火</span><span v-else>今日最火</span>
+          <span style="color:red" v-if="choosed=='hot'">今日最火</span><span @click="handleChangeShow(5,'hot')" v-else>今日最火</span>
         </div>
       </div>
     </div>
     <div v-if="choosed=='pop'">
-      <div v-for="(item,index) in 10" :key="index" class="weui-flex con-rank">
+      <div v-for="(item,index) in poplist.rs" :key="index" class="weui-flex con-rank">
         <div class="con-rank-l"> <span v-if="index<3">{{index+1}}</span> <span v-else style="color:#000">{{index+1}}</span></div>
         <div class="weui-flex__item">
-          <domvideoboxrank></domvideoboxrank>
+          <domvideoboxrank :info="item"></domvideoboxrank>
         </div>
         <div class="con-rank-r"></div>
       </div>
     </div>
     <div v-if="choosed=='hot'">
-      <div v-for="(item,index) in 10" :key="index" class="weui-flex con-rank">
+      <div v-for="(item,index) in hotlist.rs" :key="item.id" class="weui-flex con-rank">
         <div class="con-rank-l"> <span v-if="index<3">{{index+1}}</span> <span v-else style="color:#000">{{index+1}}</span></div>
         <div class="weui-flex__item">
-          <domvideoboxrank></domvideoboxrank>
+          <domvideoboxrank :info="item"></domvideoboxrank>
         </div>
         <div class="con-rank-r"></div>
       </div>
@@ -45,24 +44,46 @@ export default {
   props: [],
   data() {
     return {
-      choosed: 'pop'
+      choosed: 'pop', //pop:sfid==4 hot:sfid==5
+      poplist: {
+        page: 1,
+        pagecount: 10,
+        rs: [],
+        total: "10",
+      },
+      hotlist: {
+        page: 1,
+        pagecount: 10,
+        rs: [],
+        total: "10",
+      }
     }
   },
   computed: {
 
   },
   methods: {
-    // funname(){
-    //     var that=this;
-    //     var params={};
-    //     var sucf=function(d){
+    handleChangeShow(sfid, choosed) {
+      this.choosed = choosed;
+      this.getSourceShow(sfid)
+    },
+    getSourceShow(sfid) {
+      var that = this;
+      var params = {
+        sfid: sfid
+      };
+      var sucf = function(d) {
+        if (sfid == 4) {
+          that.poplist = d;
+        } else {
+          that.hotlist = d;
+        }
+      };
+      var errf = function(d) {
 
-    //     };
-    //     var errf=function(d){
-
-    //     };
-    //     this.$store.commit('funname',{})
-    // }
+      };
+      this.$store.commit('getSourceShow', { params: params, sucf: sucf })
+    }
   },
   watch: {
 
@@ -74,7 +95,7 @@ export default {
 
   },
   mounted() {
-
+    this.getSourceShow(4);
   }
 
 };

@@ -1,17 +1,14 @@
 <template>
   <div class="page">
     <!-- header -->
-    <mt-header title="健康生活">
-      <router-link to="/sort" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-      </mt-button>
+    <mt-header :title="category.cname">
+      <mt-button icon="back" slot="left" @click="back"></mt-button>
     </mt-header>
     <!-- <dom-search class="sortdetail-search" ></dom-search> -->
-    <div class="swiper-container">
+    <div class="swiper-container" v-show="category.child">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item,index) in [1,2,3,4,56]" :key="index">
-          {{item}}
+        <div class="swiper-slide" v-for="(item,index) in category.child" :key="index">
+          <a class="sortchild-btn" @click="goto(item.id)"> {{item.cname}}</a>
         </div>
       </div>
     </div>
@@ -40,13 +37,19 @@ export default {
         rs: [],
         total: 0
       },
+      category: {} //分类的信息
     }
   },
   computed: {
 
   },
   methods: {
-
+    back() {
+      this.$router.go(-1);
+    },
+    goto(id) {
+      this.$router.push({ path: 'sortdetail', query: { id: id} });
+    },
     getCategoryById(id) {
       //获取分类数据
       var that = this;
@@ -55,9 +58,8 @@ export default {
         id: id
       };
       var sucf = function(d) {
-        // var opt = d[0];
-        // that.getCategory(opt);
-        // that.sortLevel = opt;
+        that.category = d[0];
+
       };
       var errf = function(d) {
 
@@ -75,7 +77,7 @@ export default {
       };
 
       var sucf = function(d) {
-          that.videoList=d;
+        that.videoList = d;
       };
       var errf = function(d) {
         Toast({
@@ -106,11 +108,29 @@ export default {
     this.getVideo();
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 'auto',
-      spaceBetween: 20,
+      spaceBetween: 30,
+      centeredSlides: true,
       observer: true,
       initialSlide: 0
     });
-  }
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 可以访问组件实例 `this`
+    var id=to.query.id;
+    this.getCategoryById(id);
+    this.getVideo();
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 'auto',
+      spaceBetween: 30,
+      centeredSlides: true,
+      observer: true,
+      initialSlide: 0
+    });
+    next()
+  },
 
 };
 
@@ -148,6 +168,14 @@ export default {
   display: inline;
   width: auto;
   /*background: red;*/
+}
+
+.sortchild-btn {
+  padding: 2px 12px;
+  box-sizing: border;
+  border: 0.5px solid #ddd;
+  /*background: red;*/
+  /*margin: 0 20px;*/
 }
 
 </style>

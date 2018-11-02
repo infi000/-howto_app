@@ -1,12 +1,11 @@
 <template>
   <div class="page-home">
-      <div class="header">
+    <div class="header">
       <dom-search class="dom-search"></dom-search>
     </div>
     <!-- 轮播图 -->
     <dom-banner></dom-banner>
     <!-- 内容 -->
-
     <div class="con-home">
       <div class="tag-title-home">
         <div class="weui-flex">
@@ -20,8 +19,7 @@
           </div>
         </div>
       </div>
-
-      <dom-groupboxmini class="dom-groupboxmini" v-for="(item,index) in 2" :key="index"></dom-groupboxmini>
+      <dom-groupboxmini class="dom-groupboxmini" v-for="(item,index) in p1.rs" :key="index" v-if="index<3" :info="item"></dom-groupboxmini>
       <!-- 推荐视频 -->
       <div class="tag-title-home">
         <div class="weui-flex">
@@ -35,17 +33,16 @@
           </div>
         </div>
       </div>
-
       <div class="weui-flex">
-        <div class="weui-flex__item" v-for="(item,index) in 3" :key="index">
-          <dom-videoboxh></dom-videoboxh>
+        <div class="weui-flex__item" v-for="(item,index) in p2.rs" :key="index"  v-if="index<3">
+          <dom-videoboxh :info="item"></dom-videoboxh>
         </div>
       </div>
       <!-- 精彩视频 -->
       <div class="tag-title-home">
         <div class="weui-flex">
           <div>
-            <span class="tag-title-home-l">精彩视频</span>
+            <span class="tag-title-home-l">热门视频</span>
           </div>
           <div class="weui-flex__item">
           </div>
@@ -54,8 +51,7 @@
           </div>
         </div>
       </div>
-
-      <dom-videoboxw v-for="(item,index) in [9,8,7]" :key="item" class="dom-videoboxw"></dom-videoboxw>
+      <dom-videoboxw v-for="(item,index) in p3.rs" :key="item.id" class="dom-videoboxw"  v-if="index<3" :info="item"></dom-videoboxw>
     </div>
   </div>
 </template>
@@ -74,6 +70,25 @@ export default {
     return {
       imgSrc: {
         right: right
+      },
+
+      p1: {
+        page: 1,
+        pagecount: 10,
+        rs: [],
+        total: "10",
+      },
+      p2: {
+        page: 1,
+        pagecount: 10,
+        rs: [],
+        total: "10",
+      },
+      p3: {
+        page: 1,
+        pagecount: 10,
+        rs: [],
+        total: "10",
       }
     }
   },
@@ -81,17 +96,28 @@ export default {
 
   },
   methods: {
-    // funname(){
-    //     var that=this;
-    //     var params={};
-    //     var sucf=function(d){
+    getSourceShow(sfid) {
+      var that = this;
+      var params = {
+        sfid: sfid
+      };
+      var sucf = function(d) {
+        // sfid 1banner 2zl 3sp 6jc
+        if (sfid == 1) {
+          that.banner = d;
+        } else if (sfid == 2) {
+          that.p1 = d;
+        } else if (sfid == 3) {
+          that.p2 = d;
+        } else if (sfid == 6) {
+          that.p3 = d;
+        }
+      };
+      var errf = function(d) {
 
-    //     };
-    //     var errf=function(d){
-
-    //     };
-    //     this.$store.commit('funname',{})
-    // }
+      };
+      this.$store.commit('getSourceShow', { params: params, sucf: sucf })
+    }
   },
   watch: {
 
@@ -107,7 +133,9 @@ export default {
 
   },
   mounted() {
-
+    this.getSourceShow(2)
+    this.getSourceShow(3)
+    this.getSourceShow(6)
   }
 
 };
@@ -117,6 +145,7 @@ export default {
 .page-home {
   padding-top: 156px;
 }
+
 .header {
   height: 156px;
 }
@@ -159,6 +188,7 @@ export default {
 .dom-groupboxmini {
   margin-bottom: 70px;
 }
+
 .dom-videoboxw {
   margin-bottom: 36px;
 }

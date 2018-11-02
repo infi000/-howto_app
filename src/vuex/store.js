@@ -173,6 +173,29 @@ const mutations = {
     var errf = opt.errf || "";
     invoke_yjw(path, params, sucf, errf);
   },
+  getGroup(state, opt) {
+    //查询专栏
+    var params = opt.params || {};
+    var path = PARAMS.getGroup;
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    invoke_yjw(path, params, sucf, errf);
+  },
+  getSourceGroup(state, opt) {
+    //查询专栏下资源
+    var params = opt.params || {};
+    var path = PARAMS.getSourceGroup;
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    invoke_yjw(path, params, sucf, errf);
+  },  getSourceShow(state, opt) {
+    //查询专栏下资源
+    var params = opt.params || {};
+    var path = PARAMS.getSourceShow;
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    invoke_yjw(path, params, sucf, errf);
+  },
   getUploadParams(state, opt) {
 
     //获取上传所需参数
@@ -228,6 +251,3 @@ export default new Vuex.Store({
   getters,
   mutations,
 });
-
-
-

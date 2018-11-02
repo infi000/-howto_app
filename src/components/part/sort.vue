@@ -2,10 +2,9 @@
   <div class="page">
     <!-- header -->
     <mt-header title="分类">
-      <router-link to="/home" slot="left">
+    <!--   <router-link to="/home" slot="left">
         <mt-button icon="back"></mt-button>
-      </router-link>
-      </mt-button>
+      </router-link> -->
     </mt-header>
     <div class="sort-con">
       <div class="weui-flex sort-box" v-for="(item,index) in categoryList" :key="index" v-show="item.child">

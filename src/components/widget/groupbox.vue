@@ -1,30 +1,35 @@
 <template>
-  <div>
+  <div @click="gogroup(groupInfo)">
     <div class="groupbox">
-      <img :src="'./static/img/test.jpg'" alt="">
-      <span>除了主色外的场景色，需</span>
+      <img v-lazy='groupInfo.thumbinal' alt="">
+      <span class="text-hide-1">{{groupInfo.title}}</span>
     </div>
     <div v-if="desc" class="text-left descbox">
-      <div class="descbox-l">孩子自己就能做的科学小实验</div>
+      <div class="descbox-l  text-hide-1">{{groupInfo.title}}</div>
       <div class="descbox-r weui-flex">
-        <div class="weui-flex__item">每天10分钟，开启孩子的科学思维</div>
-        <div> <img :src="imgSrc.play" alt="" class="icon-con">
-          <span>2345</span></div>
+        <div class="weui-flex__item  text-hide-1">{{groupInfo.describe}}</div>
+        <div>
+          <i class="iconfont icon-like"></i>
+          <span>{{groupInfo.likecount}}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
-import playmini from "@/assets/playmini.png"
+import playmini from "@/assets/like.png"
 
 export default {
-  props: ['desc'], //是否有描述信息
+  props: ['info', 'desc'], //1info:主要信息,2desc:是否有描述信息
   data() {
+    var groupInfo = this.info || {};
     return {
       imgSrc: {
-        play: playmini
-      }
+        play: playmini,
+
+      },
+      groupInfo: groupInfo
     }
   },
   computed: {
@@ -42,6 +47,11 @@ export default {
     //     };
     //     this.$store.commit('funname',{})
     // }
+
+    gogroup(opt){
+      var gid=opt.id;
+      this.$router.push({path:'list',query:{type:'group',gid:gid}});
+    }
   },
   watch: {
 
@@ -86,14 +96,17 @@ export default {
 
 .descbox {
   width: 675px;
- padding: 28px 0;
- border: 0.5px solid #efefef;
+  padding: 28px 0;
+  border: 0.5px solid #efefef;
 }
-.descbox-l{
+
+.descbox-l {
   font-size: 32px;
   color: #000;
 }
-.descbox-r{
+
+.descbox-r {
   font-size: 28px;
 }
+
 </style>

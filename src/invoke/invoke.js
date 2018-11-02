@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from '../vuex/store';
-import { Toast } from 'mint-ui';
+// import { Toast } from 'mint-ui';
 
 var qs = require('qs');
 var invoke_yjw = function(path, params, sucf, errf, config) {
@@ -13,11 +13,11 @@ var invoke_yjw = function(path, params, sucf, errf, config) {
     _errf = errf || function(d) {
       console.log("error", d);
       //这里应该有弹出 以后做
-      Toast({
-        message: d,
-        position: 'top',
-        duration: 3000
-      });
+      // Toast({
+      //   message: d,
+      //   position: 'top',
+      //   duration: 3000
+      // });
     },
     _params = params ? qs.stringify(params) : "",
     _config = config || {},
@@ -48,11 +48,11 @@ var invoke_upload = function(params, sucf, errf, config) {
     },
     _errf = errf || function(d) {
       console.log("error", d);
-      Toast({
-        message: d,
-        position: 'top',
-        duration: 3000
-      });
+      // Toast({
+      //   message: d,
+      //   position: 'top',
+      //   duration: 3000
+      // });
     },
     _config = config || "",
     _url = URL_DEV.upload + '/upload?X-Progress-ID=' + _params.get('uuid');
@@ -77,11 +77,11 @@ var invoke_jys = function(params, sucf, errf, config) {
     },
     _errf = errf || function(d) {
       console.log("error", d);
-      Toast({
-        message: d,
-        position: 'top',
-        duration: 3000
-      });
+      // Toast({
+      //   message: d,
+      //   position: 'top',
+      //   duration: 3000
+      // });
     },
     _config = config || "",
     _url = URL_DEV.jys;

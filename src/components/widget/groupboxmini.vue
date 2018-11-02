@@ -1,13 +1,13 @@
 <template>
   <div class="weui-flex con">
     <div class="con-l">
-      <img :src="'./static/img/test.jpg'" alt="" width="100%" height="100%">
+      <img v-lazy="groupInfo.thumbinal" alt="" @click="gogroup(groupInfo)">
     </div>
     <div class="weui-flex__item con-r text-left">
         <dl>
-          <dt class="f1">孩子自己就能做的科学小实验</dt>
-          <dd class="f2">每天10分钟，开启孩子的科学思维</dd>
-          <dd class="f3">德拉学院讲师团</dd>
+          <dt class="f1 text-hide-1" @click="gogroup(groupInfo)">{{groupInfo.title}}</dt>
+          <dd class="f2 text-hide-1">{{groupInfo.describe}}</dd>
+          <!-- <dd class="f3 text-hide-1">{{groupInfo.describe}}</dd> -->
         </dl>
     </div>
   </div>
@@ -15,14 +15,21 @@
 <script>
 /*jshint esversion: 6 */
 export default {
-  props: [],
+  props: ['info'],
   data() {
-    return {}
+    var groupInfo=this.info||{};
+    return {
+      groupInfo:groupInfo
+    }
   },
   computed: {
 
   },
   methods: {
+        gogroup(opt){
+      var gid=opt.id;
+      this.$router.push({path:'list',query:{type:'group',gid:gid}});
+    },
     // funname(){
     //     var that=this;
     //     var params={};
@@ -60,6 +67,9 @@ export default {
 .con-l {
   width: 210px;
   height: 160px;
+}.con-l img{
+  width: 100%;
+  height: 100%;
 }
 
 .con-r{

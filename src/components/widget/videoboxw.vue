@@ -1,22 +1,22 @@
 <template>
   <div class="weui-flex con">
     <div class="con-l">
-      <img :src="'./static/img/test.jpg'" alt="" width="100%" height="100%">
+      <img v-lazy="videoInfo.thumbinal" alt="" width="100%" height="100%" @click="goplay">
     </div>
     <div class="weui-flex__item con-r text-left">
       <dl>
-        <!-- <dt class="f1">{{videoInfo.title}}</dt> -->
-        <!-- <dd class="f2">{{videoInfo.describe}}</dd> -->
+        <dt class="f1 text-hide-1" @click="goplay">{{videoInfo.title}}</dt>
+        <dd class="f2 text-hide-1">{{videoInfo.describe}}</dd>
         <dd class="f3">
           <div class="weui-flex">
             <div class="weui-flex__item">
-              <span class="tag-con">儿童</span>
+              <span class="tag-con" v-show="filterTag(videoInfo.keys)">{{filterTag(videoInfo.keys)}}</span>
             </div>
             <div class="weui-flex__item">
             </div>
             <div class="weui-flex__item">
               <img :src="imgSrc.play" alt="" class="icon-con">
-              <span>2345</span>
+              <span>{{videoInfo.playcount}}</span>
             </div>
           </div>
         </dd>
@@ -30,18 +30,21 @@ import playmini from "@/assets/playmini.png"
 export default {
   props: ['info'],
   data() {
-    var videoInfo = this.info || {};
+    var videoInfo=this.info||{};
     return {
       imgSrc: {
         play: playmini,
-        videoInfo: videoInfo
-      }
+      },
+      videoInfo:videoInfo
     }
   },
   computed: {
 
   },
-  methods: {
+  methods: {    goplay(){
+      var sid=this.info.sid;
+      this.$router.push({path:'/play',query:{sid:sid}})
+    },
     // funname(){
     //     var that=this;
     //     var params={};
@@ -53,6 +56,15 @@ export default {
     //     };
     //     this.$store.commit('funname',{})
     // }
+    filterTag(keys) {
+      var res = ''
+      if (keys) {
+        var arr = keys.split(",");
+        res = arr[0];
+      }
+
+      return res;
+    }
   },
   watch: {
 

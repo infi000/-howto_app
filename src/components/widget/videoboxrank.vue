@@ -1,23 +1,23 @@
 <template>
   <div class="weui-flex con">
-    <div class="con-l">
-      <img :src="'./static/img/test.jpg'" alt="" width="100%" height="100%">
+    <div class="con-l" @click="goplay">
+      <img v-lazy="videoInfo.thumbinal" alt="" width="100%" height="100%">
     </div>
     <div class="weui-flex__item con-r text-left">
       <dl>
-        <dt class="f1">孩子自己就能做的科学小实验</dt>
+        <dt class="f1 text-hide-1" @click="goplay">{{videoInfo.title}}</dt>
         <dd class="f2">
           <div class="weui-flex">
-            <div class="weui-flex__item"><span class="rank-money">10元</span>
+            <div class="weui-flex__item"><span class="rank-money">{{videoInfo.price}}RMB</span>
             </div>
             <div class="weui-flex__item">
               <img :src="imgSrc.play" alt="" class="icon-con">
-              <span>2345</span>
+              <span>{{videoInfo.playcount}}</span>
             </div>
           </div>
         </dd>
-        <dd class="f3">
-          每天10分钟，开启孩子的科学思维
+        <dd class="f3 text-hide-1">
+          {{videoInfo.describe}}
         </dd>
       </dl>
     </div>
@@ -27,18 +27,25 @@
 /*jshint esversion: 6 */
 import playmini from "@/assets/playmini.png"
 export default {
-  props: [],
+  props: ["info"],
   data() {
+    var videoInfo=this.info||{};
     return {
       imgSrc: {
         play: playmini
-      }
+      },
+      videoInfo:videoInfo
     }
   },
   computed: {
 
   },
   methods: {
+
+    goplay(){
+      var sid=this.info.sid;
+      this.$router.push({path:'/play',query:{sid:sid}})
+    },
     // funname(){
     //     var that=this;
     //     var params={};

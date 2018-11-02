@@ -2,14 +2,13 @@
   <div class="page">
     <!-- header -->
     <mt-header title="发现">
-      <router-link to="/home" slot="left">
+      <!--  <router-link to="/home" slot="left">
         <mt-button icon="back"></mt-button>
-      </router-link>
-      </mt-button>
+      </router-link> -->
     </mt-header>
-    <dom-search class="find-search"></dom-search>
+    <!-- <dom-search class="find-search" ></dom-search> -->
     <div class="find-con">
-      <dom-groupbox :desc="true" class="dom-groupbox" v-for="(item,index) in [12,7,6,5,3]"></dom-groupbox>
+      <dom-groupbox :info="item" :desc="true" class="dom-groupbox" v-for="(item,index) in grouplist.rs" :key="index" ></dom-groupbox>
     </div>
   </div>
 </template>
@@ -21,23 +20,30 @@ import domGroupbox from "@/components/widget/groupbox";
 export default {
   props: [],
   data() {
-    return {}
+    return {
+      grouplist: {
+        page: 1,
+        pagecount: 10,
+        rs: [],
+        total: "10",
+      }
+    }
   },
   computed: {
 
   },
   methods: {
-    // funname(){
-    //     var that=this;
-    //     var params={};
-    //     var sucf=function(d){
+    getGroup() {
+      var that = this;
+      var params = {};
+      var sucf = function(d) {
+        that.grouplist=d;
+      };
+      var errf = function(d) {
 
-    //     };
-    //     var errf=function(d){
-
-    //     };
-    //     this.$store.commit('funname',{})
-    // }
+      };
+      this.$store.commit('getGroup', {sucf:sucf})
+    }
   },
   watch: {
 
@@ -50,7 +56,7 @@ export default {
 
   },
   mounted() {
-
+    this.getGroup();
   }
 
 };
@@ -65,7 +71,9 @@ export default {
 .find-con {
   padding-left: 37px;
 }
-.dom-groupbox{
+
+.dom-groupbox {
   margin-bottom: 32px;
 }
+
 </style>

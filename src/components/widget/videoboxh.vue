@@ -1,22 +1,30 @@
 <template>
   <div class="con">
     <dl>
-      <dt><img :src="'./static/img/test.jpg'" alt=""></dt>
-      <dd>崖门影剧院循环播,放消防教育片</dd>
+      <dt><img v-lazy="videoInfo.thumbinal" alt="" @click="goplay"></dt>
+      <dd class="text-hide-1" @click="goplay">{{videoInfo.title}}</dd>
     </dl>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 export default {
-  props: [],
+  props: ['info'],
   data() {
-    return {}
+    var videoInfo=this.info||{};
+    return {
+
+      videoInfo:videoInfo
+    }
   },
   computed: {
 
   },
   methods: {
+        goplay(){
+      var sid=this.info.sid;
+      this.$router.push({path:'/play',query:{sid:sid}})
+    },
     // funname(){
     //     var that=this;
     //     var params={};
