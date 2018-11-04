@@ -1,21 +1,21 @@
-// 正式
-var URL_DEV = {
-  yjw: 'http://www.howdu.cn/howapi/index.php?',
-  // yjw: 'http://192.168.58.21/howto/index.php?',
-  jys: 'http://www.howdu.cn/wapi/i.php?',
-  upload: 'http://upload.howdu.cn', //视频服务器
-  video: 'http://video.howdu.cn', //视频服务器
-  img: 'http://www.howdu.cn/howapi', //图片服务器
-};
-
-// // 测试2 微信端用
+// // 正式
 // var URL_DEV = {
-//   yjw: 'http://www.howdu.cn/howapi_test/index.php?',
+//   yjw: 'http://www.howdu.cn/howapi/index.php?',
+//   // yjw: 'http://192.168.58.21/howto/index.php?',
 //   jys: 'http://www.howdu.cn/wapi/i.php?',
 //   upload: 'http://upload.howdu.cn', //视频服务器
 //   video: 'http://video.howdu.cn', //视频服务器
 //   img: 'http://www.howdu.cn/howapi', //图片服务器
 // };
+
+// 测试2 微信端用
+var URL_DEV = {
+  yjw: 'http://www.howdu.cn/howapi_test/index.php?',
+  jys: 'http://www.howdu.cn/wapi/i.php?',
+  upload: 'http://upload.howdu.cn', //视频服务器
+  video: 'http://video.howdu.cn', //视频服务器
+  img: 'http://www.howdu.cn/howapi', //图片服务器
+};
 
 
 // m=Home&c=&a=

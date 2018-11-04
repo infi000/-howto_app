@@ -11,7 +11,7 @@
 </template>
 <script>
 /*jshint esversion: 6 */
-// import Swiper from "swiper";
+import Swiper from "swiper";
 import domGroupbox from "@/components/widget/groupbox";
 export default {
   props: [],

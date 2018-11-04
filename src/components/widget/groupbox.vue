@@ -97,7 +97,7 @@ export default {
 .descbox {
   width: 675px;
   padding: 28px 0;
-  border: 0.5px solid #efefef;
+  border-bottom: 0.5px solid #efefef;
 }
 
 .descbox-l {
