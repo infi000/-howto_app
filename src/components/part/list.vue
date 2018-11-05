@@ -2,7 +2,8 @@
   <div class="page">
     <!-- header -->
     <mt-header :title="'专栏列表'">
-      <mt-button icon="back" slot="left" @click="back"></mt-button>
+      <!-- <mt-button icon="back" slot="left" @click="back"></mt-button> -->
+      <div slot="left" class="header-back"  @click="back"> <img :src="imgSrc.left" alt="" width="100%"> </div>
     </mt-header>
     <div class="list-con">
       <dom-videoboxw v-for="(item,index) in listInfo.rs" :key="index" :info="item" class="dom-videoboxw"></dom-videoboxw>
@@ -16,6 +17,7 @@
 // import aa from "@/components/widget/videoboxrank";
 import domVideoboxw from "@/components/widget/videoboxw";
 import domNodata from "@/components/widget/nodata";
+import imgLeft from "@/assets/left.png";
 
 export default {
   props: [],
@@ -30,6 +32,9 @@ export default {
         pagecount: 10,
         rs: [],
         total: "10",
+      },
+      imgSrc:{
+        left:imgLeft
       }
     }
   },

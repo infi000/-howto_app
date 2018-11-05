@@ -17,11 +17,13 @@ export default {
   text-align: center;
   color: #303133;
 }
-.mint-header{
+
+.mint-header {
   background-color: #e4413c;
-  height: 66px;
+  height: 100px;
   font-size: 34px;
 }
+
 .page {
   position: absolute;
   top: 0;
@@ -41,20 +43,28 @@ export default {
   right: 0;
   background: #e4413c;
 }
-.text-center{
+
+.text-center {
   text-align: center;
-}.text-left{
+}
+
+.text-left {
   text-align: left;
-}.text-right{
+}
+
+.text-right {
   text-align: right;
 }
+
 .text-hide-1,
 .text-hide-2 {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  word-break: break-all;
+  /* autoprefixer: off */
   -webkit-box-orient: vertical;
-  word-break:break-all;
+  /* autoprefixer: on */
 }
 
 .text-hide-1 {
@@ -65,17 +75,19 @@ export default {
   -webkit-line-clamp: 2;
 }
 
-.tag-con{
+.tag-con {
   padding: 3px 5px;
   border: 0.5px solid #666;
   display: inline-block;
 }
 
-.icon-con{
-    height: 25px;
-    display: inline-block;
+.icon-con {
+  height: 25px;
+  display: inline-block;
 }
-
+.header-back{
+  width:18px;
+}
 
 img[lazy=error] {
   background-image: url('/static/img/error.png');

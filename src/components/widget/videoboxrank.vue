@@ -11,7 +11,9 @@
             <div class="weui-flex__item"><span class="rank-money">{{videoInfo.price}}RMB</span>
             </div>
             <div class="weui-flex__item">
-              <img :src="imgSrc.play" alt="" class="icon-con">
+              <div class="icon-con">
+                <img :src="imgSrc.play" alt="" height="100%">
+              </div>
               <span>{{videoInfo.playcount}}</span>
             </div>
           </div>
@@ -29,12 +31,12 @@ import playmini from "@/assets/playmini.png"
 export default {
   props: ["info"],
   data() {
-    var videoInfo=this.info||{};
+    var videoInfo = this.info || {};
     return {
       imgSrc: {
         play: playmini
       },
-      videoInfo:videoInfo
+      videoInfo: videoInfo
     }
   },
   computed: {
@@ -42,9 +44,9 @@ export default {
   },
   methods: {
 
-    goplay(){
-      var sid=this.info.sid;
-      this.$router.push({path:'/play',query:{sid:sid}})
+    goplay() {
+      var sid = this.info.sid;
+      this.$router.push({ path: '/play', query: { sid: sid } })
     },
     // funname(){
     //     var that=this;
@@ -107,9 +109,11 @@ export default {
   font-size: 22px;
   color: #666;
 }
-.rank-money{
+
+.rank-money {
   font-size: 25px;
   font-weight: bold;
   color: red;
 }
+
 </style>

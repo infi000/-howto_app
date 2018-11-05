@@ -69,7 +69,8 @@ export default {
 }
 
 .find-con {
-  padding-left: 37px;
+  padding-top: 40px;
+  padding-left: 40px;
 }
 
 .dom-groupbox {

@@ -1,21 +1,21 @@
-// // 正式
-// var URL_DEV = {
-//   yjw: 'http://www.howdu.cn/howapi/index.php?',
-//   // yjw: 'http://192.168.58.21/howto/index.php?',
-//   jys: 'http://www.howdu.cn/wapi/i.php?',
-//   upload: 'http://upload.howdu.cn', //视频服务器
-//   video: 'http://video.howdu.cn', //视频服务器
-//   img: 'http://www.howdu.cn/howapi', //图片服务器
-// };
-
-// 测试2 微信端用
+// 正式
 var URL_DEV = {
-  yjw: 'http://www.howdu.cn/howapi_test/index.php?',
+  yjw: 'http://www.howdu.cn/howapi/index.php?',
+  // yjw: 'http://192.168.58.21/howto/index.php?',
   jys: 'http://www.howdu.cn/wapi/i.php?',
   upload: 'http://upload.howdu.cn', //视频服务器
   video: 'http://video.howdu.cn', //视频服务器
   img: 'http://www.howdu.cn/howapi', //图片服务器
 };
+
+// // 测试2 微信端用
+// var URL_DEV = {
+//   yjw: 'http://www.howdu.cn/howapi_test/index.php?',
+//   jys: 'http://www.howdu.cn/wapi/i.php?',
+//   upload: 'http://upload.howdu.cn', //视频服务器
+//   video: 'http://video.howdu.cn', //视频服务器
+//   img: 'http://www.howdu.cn/howapi', //图片服务器
+// };
 
 
 // m=Home&c=&a=
@@ -28,7 +28,7 @@ var PARAMS = {
   addVideo: 'm=Home&c=Source&a=addSource', //添加video信息
   // editVideo: 'm=Home&c=Source&a=modifySource', //修改video信息
   // auditVideo: 'm=Home&c=Source&a=modifySourceStatus', //审核video
-  getVideo: 'm=Home&c=Source&a=searchSource', //查询video列表信息
+  getVideo: 'm=Home&c=Source&a=openSearchSource', //查询video列表信息
   getVideoFromId: 'm=Home&c=Source&a=getSourceById', //查询video单个信息
   getPlayedSource: 'm=Home&c=Source&a=playedSource', //获取用户播放资源
   getOwnSource: 'm=Home&c=Source&a=ownSource', //获取用户播放资源

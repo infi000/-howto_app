@@ -46,8 +46,9 @@ module.exports = {
       },
             {
         test: /\.css$/,
-        loader: 'url-loader',
-             include: [/src/,'/node_modules/mint-ui/lib']
+        // loader: 'url-loader',
+        loader: 'style!css',
+        include: [/src/,'/node_modules/mint-ui/lib']
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

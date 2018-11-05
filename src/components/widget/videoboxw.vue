@@ -15,7 +15,9 @@
             <div class="weui-flex__item">
             </div>
             <div class="weui-flex__item">
-              <img :src="imgSrc.play" alt="" class="icon-con">
+              <div class="icon-con">
+                <img :src="imgSrc.play" alt="" height="100%">
+              </div>
               <span>{{videoInfo.playcount}}</span>
             </div>
           </div>
@@ -30,20 +32,23 @@ import playmini from "@/assets/playmini.png"
 export default {
   props: ['info'],
   data() {
-    var videoInfo=this.info||{};
+    var videoInfo = this.info || {};
     return {
       imgSrc: {
         play: playmini,
       },
-      videoInfo:videoInfo
+      videoInfo: videoInfo
     }
   },
   computed: {
 
   },
-  methods: {    goplay(){
-      var sid=this.info.sid;
-      this.$router.push({path:'/play',query:{sid:sid}})
+  methods: {
+    goplay() {
+      console.log(this.videoInfo)
+      var sid = this.videoInfo.id;
+      console.log("sid",sid)
+      this.$router.push({ path: '/play', query: { sid: sid } })
     },
     // funname(){
     //     var that=this;

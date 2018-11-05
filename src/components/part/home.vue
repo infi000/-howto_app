@@ -4,7 +4,7 @@
       <dom-search class="dom-search"></dom-search>
     </div>
     <!-- 轮播图 -->
-    <dom-banner></dom-banner>
+    <dom-banner class="banner" ></dom-banner>
     <!-- 内容 -->
     <div class="con-home">
       <div class="tag-title-home">
@@ -154,7 +154,11 @@ export default {
   margin-top: 46px;
 }
 
+.banner{
+  margin-top: 40px;
+}
 .con-home {
+
   width: 687px;
   margin: 0 auto;
 }

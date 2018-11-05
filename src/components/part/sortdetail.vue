@@ -2,7 +2,7 @@
   <div class="page">
     <!-- header -->
     <mt-header :title="category.cname">
-      <mt-button icon="back" slot="left" @click="back"></mt-button>
+      <div slot="left" class="header-back" @click="back"> <img :src="imgSrc.left" alt="" width="100%"> </div>
     </mt-header>
     <!-- <dom-search class="sortdetail-search" ></dom-search> -->
     <div class="swiper-container" v-show="category.child">
@@ -24,6 +24,8 @@
 import domVideoboxw from "@/components/widget/videoboxw";
 import domSearch from "@/components/widget/search";
 import Swiper from "swiper";
+import { Toast } from 'mint-ui';
+import imgLeft from "@/assets/left.png";
 
 export default {
   props: [],
@@ -37,6 +39,9 @@ export default {
         rs: [],
         total: 0
       },
+      imgSrc: {
+        left: imgLeft
+      },
       category: {} //分类的信息
     }
   },
@@ -48,7 +53,7 @@ export default {
       this.$router.go(-1);
     },
     goto(id) {
-      this.$router.push({ path: 'sortdetail', query: { id: id} });
+      this.$router.push({ path: 'sortdetail', query: { id: id } });
     },
     getCategoryById(id) {
       //获取分类数据
@@ -109,7 +114,7 @@ export default {
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 'auto',
       spaceBetween: 30,
-      centeredSlides: true,
+      // centeredSlides: true,
       observer: true,
       initialSlide: 0
     });
@@ -119,7 +124,7 @@ export default {
     // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
-    var id=to.query.id;
+    var id = to.query.id;
     this.getCategoryById(id);
     this.getVideo();
     var swiper = new Swiper('.swiper-container', {

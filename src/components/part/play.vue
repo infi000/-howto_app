@@ -2,7 +2,7 @@
   <div class="page">
     <!-- header -->
     <mt-header title="视频展示">
-      <mt-button icon="back" slot="left" @click="goback"></mt-button>
+      <div slot="left" class="header-back" @click="goback"> <img :src="imgSrc.left" alt="" width="100%"> </div>
     </mt-header>
     <div class="play-box">
       <div class="preview-box">
@@ -47,16 +47,19 @@
 </template>
 <script>
 /*jshint esversion: 6 */
-// import Swiper from "swiper";
+import Swiper from "swiper";
 import playbtn from "@/assets/play_btn.png";
 import domVideoboxh from "@/components/widget/videoboxh";
+import imgLeft from "@/assets/left.png";
+
 export default {
   props: [],
   data() {
     var sid = this.$route.query.sid;
     return {
       imgSrc: {
-        play: playbtn
+        play: playbtn,
+          left:imgLeft
       },
       sid: sid,
       videoInfo: {},
@@ -83,7 +86,7 @@ export default {
       if (this.auth == '1' || this.videoInfo.price == '0') {
         //计数
         this.playing = true;
-        var sid=this.sid;
+        var sid = this.sid;
         this.addPlayStatistics(sid);
       } else {
         //提示去付费
@@ -107,7 +110,7 @@ export default {
     getSourceShow(sfid) {
       var that = this;
       var params = {
-        sfid: sfid
+        sfid: 3
       };
       var sucf = function(d) {
         // sfid 1banner 2zl 3sp 6jc
@@ -151,7 +154,7 @@ export default {
     this.getVideoFromId(sid);
     this.getVideoAuth(sid);
 
-    this.getSourceShow(2);
+    this.getSourceShow();
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 'auto',
       spaceBetween: 10,
@@ -160,7 +163,19 @@ export default {
       initialSlide: 0,
       loop: true
     });
-  }
+  },
+  beforeRouteUpdate(to, from, next) {
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 可以访问组件实例 `this`
+    var sid = to.query.sid;
+    this.getVideoFromId(sid);
+    this.getVideoAuth(sid);
+
+    this.playing = false;
+    next()
+  },
 
 };
 

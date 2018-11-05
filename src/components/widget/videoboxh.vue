@@ -1,7 +1,9 @@
 <template>
   <div class="con">
     <dl>
-      <dt><img v-lazy="videoInfo.thumbinal" alt="" @click="goplay"></dt>
+      <dt>
+        <div class="imgbox"><img v-lazy="videoInfo.thumbinal" alt="" @click="goplay" width="100%" height="100%"></div>
+      </dt>
       <dd class="text-hide-1" @click="goplay">{{videoInfo.title}}</dd>
     </dl>
   </div>
@@ -11,19 +13,19 @@
 export default {
   props: ['info'],
   data() {
-    var videoInfo=this.info||{};
+    var videoInfo = this.info || {};
     return {
 
-      videoInfo:videoInfo
+      videoInfo: videoInfo
     }
   },
   computed: {
 
   },
   methods: {
-        goplay(){
-      var sid=this.info.sid;
-      this.$router.push({path:'/play',query:{sid:sid}})
+    goplay() {
+      var sid = this.info.sid;
+      this.$router.push({ path: '/play', query: { sid: sid } })
     },
     // funname(){
     //     var that=this;
@@ -60,11 +62,13 @@ export default {
   width: 216px;
 }
 
-.con img {
+.imgbox {
   width: 100%;
   height: 160px;
 }
-.con dd{
+
+.con dd {
   font-size: 26px;
 }
+
 </style>

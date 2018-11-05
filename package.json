@@ -13,6 +13,7 @@
     "axios": "^0.18.0",
     "cssnano": "^4.1.7",
     "cssnano-preset-default": "^4.0.5",
+    "echarts": "^4.2.0-rc.2",
     "mint-ui": "^2.2.13",
     "postcss": "^7.0.5",
     "postcss-aspect-ratio-mini": "^0.0.2",
@@ -23,6 +24,7 @@
     "postcss-write-svg": "^3.0.1",
     "qs": "^6.5.2",
     "swiper": "^4.4.1",
+    "v-charts": "^1.19.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

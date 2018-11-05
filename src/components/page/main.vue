@@ -4,38 +4,54 @@
     <div class="weui-tabbar tabber">
       <a @click="goto('find')" class="weui-tabbar__item">
         <template v-if="choose!='find'">
-          <img :src="imgSrc.faxian" alt="" class="weui-tabbar__icon">
+          <div class="weui-tabbar__icon">
+            <img :src="imgSrc.faxian" alt="" width="100%" height="100%">
+          </div>
           <p class="weui-tabbar__label">发现</p>
         </template>
-        <img :src="imgSrc.faxian2" alt="" class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+        <div class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+          <img :src="imgSrc.faxian2" alt="" width="100%" height="100%">
+        </div>
       </a>
       <a @click="goto('sort')" class="weui-tabbar__item">
         <template v-if="choose!='sort'">
-          <img :src="imgSrc.fenlei" alt="" class="weui-tabbar__icon">
+          <div class="weui-tabbar__icon">
+            <img :src="imgSrc.fenlei" alt="" width="100%" height="100%"> </div>
           <p class="weui-tabbar__label">分类</p>
         </template>
-        <img :src="imgSrc.fenlei2" alt="" class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+        <div class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+          <img :src="imgSrc.fenlei2" alt="" width="100%" height="100%">
+        </div>
       </a>
       <a @click="goto('home')" class="weui-tabbar__item">
         <template v-if="choose!='home'">
-          <img :src="imgSrc.shouye" alt="" class="weui-tabbar__icon">
+          <div class="weui-tabbar__icon">
+            <img :src="imgSrc.shouye" alt="" width="100%" height="100%"> </div>
           <p class="weui-tabbar__label">首页</p>
         </template>
-        <img :src="imgSrc.shouye2" alt="" class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+        <div class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+          <img :src="imgSrc.shouye2" alt="" width="100%" height="100%">
+        </div>
       </a>
       <a @click="goto('rank')" class="weui-tabbar__item">
         <template v-if="choose!='rank'">
-          <img :src="imgSrc.paihangbang" alt="" class="weui-tabbar__icon">
+          <div class="weui-tabbar__icon">
+            <img :src="imgSrc.paihangbang" alt="" width="100%" height="100%"> </div>
           <p class="weui-tabbar__label">排行榜</p>
         </template>
-        <img :src="imgSrc.paihangbang2" alt="" class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+        <div class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+          <img :src="imgSrc.paihangbang2" alt="" width="100%" height="100%">
+        </div>
       </a>
       <a @click="goto('me')" class="weui-tabbar__item">
         <template v-if="choose!='me'">
-          <img :src="imgSrc.wode" alt="" class="weui-tabbar__icon">
+          <div class="weui-tabbar__icon">
+            <img :src="imgSrc.wode" alt="" width="100%" height="100%"></div>
           <p class="weui-tabbar__label">我的</p>
         </template>
-        <img :src="imgSrc.wode2" alt="" class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+        <div class="weui-tabbar__icon weui-tabbar__icon2" v-else>
+          <img :src="imgSrc.wode2" alt="" width="100%" height="100%">
+        </div>
       </a>
     </div>
   </div>
@@ -57,7 +73,7 @@ export default {
   props: [],
   data() {
 
-    var choose=this.$route.name||'';
+    var choose = this.$route.name || '';
     return {
       choose: choose,
       imgSrc: {
@@ -80,7 +96,7 @@ export default {
   methods: {
     goto(url) {
       var url = url || '/';
-      this.choose=url;
+      this.choose = url;
       this.$router.push({ path: url });
     }
   },
@@ -93,8 +109,7 @@ export default {
   created() {
 
   },
-  mounted() {
-  }
+  mounted() {}
 
 };
 
@@ -116,11 +131,14 @@ export default {
   height: 44px;
   margin-top: 20px;
   margin-bottom: 2px;
+
 }
 
 .weui-tabbar__icon2 {
   width: 75px;
   height: 75px;
+    overflow:hidden;
+  border-radius: 50%;
 }
 
 .weui-tabbar__label {

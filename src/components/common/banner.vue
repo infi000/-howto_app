@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <template v-if="banner.rs.length"> -->
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in banner.rs">
@@ -7,6 +8,7 @@
         </div>
       </div>
     </div>
+    <!-- </template> -->
   </div>
 </template>
 <script>
@@ -42,13 +44,20 @@ export default {
         };
 
         var swiper = new Swiper('.swiper-container', {
-          auto:true,
+          autoplay: true, //等同于以下设置
           slidesPerView: 'auto',
           spaceBetween: 10,
           observer: true,
           centeredSlides: true,
-          initialSlide: 0,
-          loop: true
+          // initialSlide: 3,
+          loop: true,
+          on: {
+            init: function() {
+              //Swiper初始化了
+              console.log('当前的slide序号是', this);
+              this.slideToLoop(1, 1000, false);//切换到第一个slide，速度为1秒
+            },
+          },
         });
       };
       var errf = function(d) {
@@ -58,7 +67,20 @@ export default {
     }
   },
   watch: {
+    // 'banner.rs' () {
+    //   if (this.banner.rs.length) {
 
+    //     var swiper = new Swiper('.swiper-container', {
+    //       auto: true,
+    //       slidesPerView: 'auto',
+    //       spaceBetween: 10,
+    //       observer: true,
+    //       centeredSlides: true,
+    //       // initialSlide: 3,
+    //       loop: true
+    //     });
+    //   }
+    // }
   },
   components: {
     domGroupbox
