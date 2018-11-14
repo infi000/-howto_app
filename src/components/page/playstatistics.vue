@@ -1,23 +1,17 @@
 <template>
   <div class="mebox-page">
-    <mt-header fixed title="播放统计">
-      <router-link to="/mebox" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-    </mt-header>
-    <p class="tagName">播放统计</p>
+    <dom-header :title="'播放统计'" :mrb40="true"></dom-header>
     <ve-line :data="chartData" :settings="chartSettings" v-if="chartData['rows'].length>0"></ve-line>
-    <div class="weui-loadmore weui-loadmore_line" v-else>
-      <span class="weui-loadmore__tips">暂无数据</span>
-    </div>
-        <loading-page v-show="loading"></loading-page>
-
+    <dom-nodata v-else></dom-nodata>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 import VeLine from 'v-charts/lib/line.common'
 import loadingPage from "@/components/widget/loading";
+import domHeader from "@/components/widget/header-back";
+import domNodata from "@/components/widget/nodata";
 import { Toast } from 'mint-ui';
 
 export default {
@@ -35,14 +29,19 @@ export default {
 
         ]
       },
-      loading:false
+      loading: false
     };
   },
   computed: {
 
   },
   methods: {
+
     getPlayStatistics() {
+      // var d = [{ "pday": "2018-09-14", "pcount": "4" }, { "pday": "2018-09-17", "pcount": "5" }, { "pday": "2018-09-18", "pcount": "5" }];
+      // this.chartData.rows = d;
+
+
       this.loading = true;
       var that = this;
       var params = {
@@ -51,25 +50,27 @@ export default {
       };
       var sucf = function(d) {
         that.loading = false;
-        // var d = [{ "pday": "2018-09-14", "pcount": "4" }, { "pday": "2018-09-17", "pcount": "5" }, { "pday": "2018-09-18", "pcount": "5" }];
         that.chartData.rows = d;
       };
       var errf = function(d) {
-       Toast({
+        Toast({
           message: '获取信息失败',
           position: 'top',
           duration: 3000
         });
         that.loading = false;
       };
-      this.$store.commit('getPlayStatistics', { params: params,sucf:sucf,errf:errf })
+      this.$store.commit('getPlayStatistics', { params: params, sucf: sucf, errf: errf })
     }
   },
   watch: {
 
   },
   components: {
-    VeLine,loadingPage
+    VeLine,
+    loadingPage,
+    domHeader,
+    domNodata
   },
   created() {
 

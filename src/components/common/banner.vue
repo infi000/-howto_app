@@ -4,7 +4,7 @@
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in banner.rs">
-          <dom-groupbox :info="item"></dom-groupbox>
+          <dom-groupbox :info="item"  ></dom-groupbox>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@ export default {
           on: {
             init: function() {
               //Swiper初始化了
-              console.log('当前的slide序号是', this);
+              // console.log('当前的slide序号是', this);
               this.slideToLoop(1, 1000, false);//切换到第一个slide，速度为1秒
             },
           },

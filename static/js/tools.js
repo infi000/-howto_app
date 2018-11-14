@@ -1,8 +1,8 @@
 // 正式
 var URL_DEV = {
-  yjw: 'http://www.howdu.cn/howapi/index.php?',
+  yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi/index.php?',
   // yjw: 'http://192.168.58.21/howto/index.php?',
-  jys: 'http://www.howdu.cn/wapi/i.php?',
+  jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi/i.php?',
   upload: 'http://upload.howdu.cn', //视频服务器
   video: 'http://video.howdu.cn', //视频服务器
   img: 'http://www.howdu.cn/howapi', //图片服务器
@@ -12,6 +12,16 @@ var URL_DEV = {
 // var URL_DEV = {
 //   yjw: 'http://www.howdu.cn/howapi_test/index.php?',
 //   jys: 'http://www.howdu.cn/wapi/i.php?',
+//   upload: 'http://upload.howdu.cn', //视频服务器
+//   video: 'http://video.howdu.cn', //视频服务器
+//   img: 'http://www.howdu.cn/howapi', //图片服务器
+// };
+
+
+// // app测试
+// var URL_DEV = {
+//   yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi/index.php?',
+//   jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi_test/i.php?',
 //   upload: 'http://upload.howdu.cn', //视频服务器
 //   video: 'http://video.howdu.cn', //视频服务器
 //   img: 'http://www.howdu.cn/howapi', //图片服务器
@@ -40,14 +50,15 @@ var PARAMS = {
   getPayStatistics: 'm=Home&c=Pay&a=payStatistics', //获取付费统计
   getAccount: 'm=Home&c=Cash&a=account ', //获取账户金额
   getCashStatistics: 'm=Home&c=Cash&a=cashStatistics ', //获取账户金额
-  getGroup:'m=Home&c=Group&a=search',//查询专栏
-  getSourceGroup:'m=Home&c=SourceGroup&a=search',//查询专栏资源
-  getSourceShow:'m=Home&c=SourceShow&a=search',//查询资源
+  getGroup: 'm=Home&c=Group&a=search', //查询专栏
+  getSourceGroup: 'm=Home&c=SourceGroup&a=search', //查询专栏资源
+  getSourceShow: 'm=Home&c=SourceShow&a=search', //查询资源
   getUploadParams: '50051', //获取上传视频所需信息
   // getUploadList: '50052', //获取上传文件列表
   // delUpload: '50053', //删除上传文件
   addOrder: 12080, //确认去支付
   getCash: 12280, //红包提现
+  loginstatus:2112,//登陆状态
 
 };
 
@@ -100,3 +111,5 @@ function setCookie(name, value, day) {
     document.cookie = name + "=" + encodeURIComponent(value);
   }
 }
+
+

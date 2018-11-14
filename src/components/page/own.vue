@@ -1,32 +1,21 @@
 <template>
   <div class="mebox-page">
-    <mt-header fixed title="我的视频">
-      <router-link to="/mebox" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-    </mt-header>
-    <p class="tagName">我的视频</p>
-    <a class="weui-media-box weui-media-box_appmsg" v-for="(item,index) in videoList.rs" @click="play(item.id)">
-      <div class="weui-media-box__hd">
-        <img class="weui-media-box__thumb" v-lazy="item.thumbinal" alt="">
-      </div>
-      <div class="weui-media-box__bd">
-        <h4 class="weui-media-box__title">{{item.title}}</h4>
-        <p class="weui-media-box__desc">
-          <span>{{dateFormat(item.createtime)}}</span><b class="pull-right">{{statusFormat(item.status).name}} </b></p>
-      </div>
-    </a>
-    <div class="weui-loadmore weui-loadmore_line" v-show="videoList['rs'].length==0">
-      <span class="weui-loadmore__tips">暂无数据</span>
+    <dom-header :title="'我的视频'" :mrb40="true"></dom-header>
+    <div class="con" v-infinite-scroll="loadMore" infinite-scroll-immediate-check="false">
+      <domVideoboxw v-for="(item,index) in videoList.rs" :key="item.id" class="dom-videoboxw" :info="item" :sid="item.id"></domVideoboxw>
     </div>
-        <loading-page v-show="loading"></loading-page>
-
+      <dom-nodata v-show="noData"></dom-nodata>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 import loadingPage from "@/components/widget/loading";
+import domHeader from "@/components/widget/header-back";
+import domNodata from "@/components/widget/nodata";
+import domVideoboxw from "@/components/widget/videoboxw";
 import { Toast } from 'mint-ui';
+
 
 export default {
   props: [],
@@ -34,70 +23,93 @@ export default {
     return {
       videoList: {
         page: 1,
-        pagecount: 20,
+        pagecount: 10,
         rs: [],
-        total: 0
+        total: 0,
       },
-       loading: false
+      loading: false,
+      noData: true
     };
   },
   computed: {
 
   },
   methods: {
-    statusFormat(status) {
-      var s = status;
-      var r = {};
-      switch (s) {
-        case "0":
-          r = { name: "审核中 ", type: "warning " };
-          break;
-        case "1":
-          r = { name: "已过审 ", type: "success " };
-          break;
-        case "4":
-          r = { name: "未过审 ", type: "danger " };
-          break;
-        case "-1":
-          r = { name: "下线 ", type: "info " };
-          break;
+    // 没用了
+    // statusFormat(status) {
+    //   var s = status;
+    //   var r = {};
+    //   switch (s) {
+    //     case "0":
+    //       r = { name: "审核中 ", type: "warning " };
+    //       break;
+    //     case "1":
+    //       r = { name: "已过审 ", type: "success " };
+    //       break;
+    //     case "4":
+    //       r = { name: "未过审 ", type: "danger " };
+    //       break;
+    //     case "-1":
+    //       r = { name: "下线 ", type: "info " };
+    //       break;
+    //   }
+    //   return r;
+    // },
+    // dateFormat(date) {
+    //   var d = date * 1000;
+    //   var t = new Date(d);
+    //   t = t.format('yyyy-MM-dd  hh:mm:ss');
+    //   return t;
+    // },
+    loadMore() {
+      if (this.loading || this.noData) {
+        return;
       }
-      return r;
-    },
-    dateFormat(date) {
-      var d = date * 1000;
-      var t = new Date(d);
-      t = t.format('yyyy-MM-dd  hh:mm:ss');
-      return t;
-    },
-    play(id) {
-      var id = id || '';
-      this.$router.push({ path: "videopage", query: { id: id } });
+      this.videoList.page++;
+      this.getOwnSource();
     },
     getOwnSource() {
-       this.loading = true;
+      this.loading = true;
+      this.noData = false;
+
       var that = this;
-      var params = {};
+      var params = {
+        page: that.videoList.page,
+        pagecount: that.videoList.pagecount,
+      };
       var sucf = function(d) {
-         that.loading = false
-        that.videoList = d;
+        var rs = that.videoList.rs;
+        var drs = d.rs;
+        rs.push.apply(rs, drs);
+        var page = d.page;
+        if (drs.length == 0) {
+          //没有返回数据
+          that.noData = true;
+        }
+        that.videoList.page = d.page;
+        that.videoList.rs = rs;
+        that.videoList.total = d.total;
+        that.loading = false;
       };
       var errf = function(d) {
-   Toast({
+        Toast({
           message: '获取信息失败',
           position: 'top',
           duration: 3000
         });
         that.loading = false;
       };
-      this.$store.commit('getOwnSource', { sucf: sucf,errf:errf });
+      this.$store.commit('getOwnSource', { params: params, sucf: sucf, errf: errf });
     },
   },
   watch: {
 
   },
   components: {
- loadingPage
+    loadingPage,
+    domVideoboxw,
+    domHeader,
+    domNodata
   },
   created() {
 
@@ -110,8 +122,12 @@ export default {
 
 </script>
 <style scoped>
-.weui-media-box__desc {
-  padding: 4px 0;
+.dom-videoboxw {
+  margin-bottom: 36px;
+}
+
+.con {
+  padding: 0 20px;
 }
 
 </style>

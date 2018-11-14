@@ -4,7 +4,7 @@
       <dom-search class="dom-search"></dom-search>
     </div>
     <!-- 轮播图 -->
-    <dom-banner class="banner" ></dom-banner>
+    <dom-banner class="banner"></dom-banner>
     <!-- 内容 -->
     <div class="con-home">
       <div class="tag-title-home">
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <dom-groupboxmini class="dom-groupboxmini" v-for="(item,index) in p1.rs" :key="index" v-if="index<3" :info="item"></dom-groupboxmini>
+      <dom-groupboxmini class="dom-groupboxmini" v-for="(item,index) in p1.rs" :key="index" v-if="index<3" :info="item" :sid="item.sid"></dom-groupboxmini>
       <!-- 推荐视频 -->
       <div class="tag-title-home">
         <div class="weui-flex">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="weui-flex">
-        <div class="weui-flex__item" v-for="(item,index) in p2.rs" :key="index"  v-if="index<3">
+        <div class="weui-flex__item" v-for="(item,index) in p2.rs" :key="index" v-if="index<3">
           <dom-videoboxh :info="item"></dom-videoboxh>
         </div>
       </div>
@@ -51,18 +51,19 @@
           </div>
         </div>
       </div>
-      <dom-videoboxw v-for="(item,index) in p3.rs" :key="item.id" class="dom-videoboxw"  v-if="index<3" :info="item"></dom-videoboxw>
+      <dom-videoboxw v-for="(item,index) in p3.rs" :key="item.id" class="dom-videoboxw" :info="item"></dom-videoboxw>
     </div>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 import domSearch from "@/components/widget/search";
-
 import domBanner from "@/components/common/banner";
 import domGroupboxmini from "@/components/widget/groupboxmini";
 import domVideoboxh from "@/components/widget/videoboxh";
 import domVideoboxw from "@/components/widget/videoboxw";
+import loadingPage from "@/components/widget/loading";
 import right from "@/assets/right.png";
 export default {
   props: [],
@@ -71,7 +72,6 @@ export default {
       imgSrc: {
         right: right
       },
-
       p1: {
         page: 1,
         pagecount: 10,
@@ -89,13 +89,40 @@ export default {
         pagecount: 10,
         rs: [],
         total: "10",
-      }
+      },
+      loading: false
     }
   },
   computed: {
 
   },
   methods: {
+    // loginstatus() {
+    //   var that = this;
+
+    //   var token = this.$route.query.accesstoken || "";
+    //   var openid = this.$route.query.openid || "";
+    //   var loginstatus = this.$store.state.loginstatus;
+    //   if (!loginstatus) {
+    //     if (!token && !openid) {
+    //     // if (token && openid) {
+    //       var params = {
+    //         token:token,
+    //         openid:openid,
+    //       };
+
+    //       var sucf = function(d) {
+    //         //成功
+    //       };
+    //       var errf = function(d) {
+    //         //失败
+    //       };
+    //       this.$store.commit('loginstatus', { sucf: sucf, errf: errf });
+    //     }
+
+    //   }
+
+    // },
     getSourceShow(sfid) {
       var that = this;
       var params = {
@@ -111,18 +138,20 @@ export default {
           that.p2 = d;
         } else if (sfid == 6) {
           that.p3 = d;
-        }
+        };
+        that.loading = false;
       };
       var errf = function(d) {
 
       };
-      this.$store.commit('getSourceShow', { params: params, sucf: sucf })
+      this.$store.commit('getSourceShow', { params: params, sucf: sucf });
     }
   },
   watch: {
 
   },
   components: {
+    loadingPage,
     domSearch,
     domBanner,
     domGroupboxmini,
@@ -133,9 +162,11 @@ export default {
 
   },
   mounted() {
-    this.getSourceShow(2)
-    this.getSourceShow(3)
-    this.getSourceShow(6)
+    this.loading = true;
+    this.getSourceShow(2);
+    this.getSourceShow(3);
+    this.getSourceShow(6);
+    // this.loginstatus();
   }
 
 };
@@ -154,9 +185,10 @@ export default {
   margin-top: 46px;
 }
 
-.banner{
+.banner {
   margin-top: 40px;
 }
+
 .con-home {
 
   width: 687px;

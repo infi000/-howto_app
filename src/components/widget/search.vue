@@ -1,14 +1,12 @@
 <template>
-  <div class="searchBar" >
+  <div class="searchBar" id="searchBar">
     <form class="weui-search-bar__form">
       <div class="weui-search-bar__box">
         <i class="weui-icon-search"></i>
-        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+        <input type="search" class="weui-search-bar__input" ref="input" placeholder="搜索" v-model="input" required="" @focus="handleFocus" @blur="handleBlur">
       </div>
-
     </form>
-    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+    <a class="btn-search" ref="btn" v-show="inputting" @click="handleSearch">确定</a>
   </div>
 </template>
 <script>
@@ -16,7 +14,10 @@
 export default {
   props: [],
   data() {
-    return {}
+    return {
+      inputting: false,
+      input: ''
+    };
   },
   computed: {
 
@@ -33,6 +34,20 @@ export default {
     //     };
     //     this.$store.commit('funname',{})
     // }
+    handleFocus() {
+      this.inputting = true;
+
+    },
+    handleBlur() {
+      this.inputting = false;
+
+    },
+    handleSearch() {
+      if (this.input) {
+        var title = this.input;
+        this.$router.push({ path: "searchresult", query: { title: title } })
+      }
+    }
   },
   watch: {
 
@@ -51,16 +66,31 @@ export default {
 
 </script>
 <style>
-.searchBar{
+.searchBar {
   width: 669px;
   margin: 0 auto;
+  position: relative;
 }
 
-.weui-search-bar__form{
-  width:100%;
+.btn-search {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-size: 34px;
+  background: #e4413c;
+  color: #fff;
+  padding: 0 10px;
+  z-index: 1px;
+}
+
+.weui-search-bar__form {
+  width: 100%;
   height: 50px;
 }
-.weui-search-bar__label span{
+
+.weui-search-bar__label span {
   font-size: 27px;
 }
+
 </style>

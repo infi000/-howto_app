@@ -2,7 +2,7 @@
   <div class="page">
     <!-- header -->
     <mt-header title="分类">
-    <!--   <router-link to="/home" slot="left">
+      <!--   <router-link to="/home" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link> -->
     </mt-header>
@@ -14,18 +14,21 @@
         </div>
       </div>
     </div>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 
 // import aa from "@/components/widget/videoboxrank";
+import loadingPage from "@/components/widget/loading";
 
 export default {
   props: [],
   data() {
     return {
-      categoryList: []
+      categoryList: [],
+      loading: false
     }
   },
   computed: {
@@ -33,9 +36,10 @@ export default {
   },
   methods: {
     goto(id) {
-      this.$router.push({ path: 'sortdetail', query:{ id: id } });
+      this.$router.push({ path: 'sortdetail', query: { id: id,level:'channel' } });
     },
     getCategory(opt) {
+      this.loading = true;
       var opt = opt || {};
       var that = this;
       var params = {
@@ -44,6 +48,7 @@ export default {
       };
       var sucf = function(d) {
         that.categoryList = d;
+        that.loading = false;
       };
       var errf = function(d) {
 
@@ -55,7 +60,7 @@ export default {
 
   },
   components: {
-
+    loadingPage
   },
   created() {
 

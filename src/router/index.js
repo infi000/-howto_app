@@ -17,6 +17,15 @@ import incomestatistics from '@/components/page/incomestatistics';
 import own from '@/components/page/own';
 import playstatistics from '@/components/page/playstatistics';
 import upload from '@/components/page/upload';
+import pay from '@/components/page/pay';
+import payment from '@/components/page/payment';
+import searchresult from '@/components/page/searchResult';
+import about from '@/components/page/about';
+import about_yszc from '@/components/page/about_yszc';
+import loopplay from '@/components/page/loopplay';
+import payment_suc from '@/components/page/payment_suc';
+import payment_err from '@/components/page/payment_err';
+import dev from '@/components/page/dev';
 
 Vue.use(Router)
 
@@ -58,37 +67,73 @@ export default new Router({
       name: 'me',
       component: me
     }]
-  },{
-      path: '/played',
-      name: 'played',
-      component: played
-    }, {
-      path: '/bought',
-      name: 'bought',
-      component: bought
-    }, {
-      path: '/own',
-      name: 'own',
-      component: own
-    }, {
-      path: '/playstatistics',
-      name: 'playstatistics',
-      component: playstatistics
-    }, {
-      path: '/incomestatistics',
-      name: 'incomestatistics',
-      component: incomestatistics
-    }, {
-      path: '/cash',
-      name: 'cash',
-      component: cash
-    }, {
-      path: '/cashment',
-      name: 'cashment',
-      component: cashment
-    }, {
-      path: '/upload',
-      name: 'upload',
-      component: upload
-    }, ]
+  }, {
+    path: '/played',
+    name: 'played',
+    component: played
+  }, {
+    path: '/bought',
+    name: 'bought',
+    component: bought
+  }, {
+    path: '/own',
+    name: 'own',
+    component: own
+  }, {
+    path: '/playstatistics',
+    name: 'playstatistics',
+    component: playstatistics
+  }, {
+    path: '/incomestatistics',
+    name: 'incomestatistics',
+    component: incomestatistics
+  }, {
+    path: '/cash',
+    name: 'cash',
+    component: cash
+  }, {
+    path: '/cashment',
+    name: 'cashment',
+    component: cashment
+  }, {
+    path: '/upload',
+    name: 'upload',
+    component: upload
+  }, {
+    path: '/pay',
+    name: 'pay',
+    component: pay
+  }, {
+    path: '/payment',
+    name: 'payment',
+    component: payment
+  }, {
+    path: '/searchresult',
+    name: 'searchresult',
+    component: searchresult
+  }, {
+    path: '/about',
+    name: 'about',
+    component: about
+  }, {
+    path: '/about_yszc',
+    name: 'about_yszc',
+    component: about_yszc
+  }, {
+    path: '/loopplay',
+    name: 'loopplay',
+    component: loopplay
+  }, {
+    path: '/payment_suc',
+    name: 'payment_suc',
+    component: payment_suc
+  }, {
+    path: '/payment_err',
+    name: 'payment_err',
+    component: payment_err
+  }, {
+    path: '/dev',
+    name: 'dev',
+    component: dev
+  }, ]
 })

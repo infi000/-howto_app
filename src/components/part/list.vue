@@ -1,23 +1,22 @@
 <template>
   <div class="page">
     <!-- header -->
-    <mt-header :title="'专栏列表'">
-      <!-- <mt-button icon="back" slot="left" @click="back"></mt-button> -->
-      <div slot="left" class="header-back"  @click="back"> <img :src="imgSrc.left" alt="" width="100%"> </div>
-    </mt-header>
-    <div class="list-con">
+    <dom-header :title="'专栏列表'" :mrb40="true"></dom-header>
+    <div class="list-con" v-infinite-scroll="loadMore" infinite-scroll-immediate-check="false">
       <dom-videoboxw v-for="(item,index) in listInfo.rs" :key="index" :info="item" class="dom-videoboxw"></dom-videoboxw>
-      <dom-nodata v-show="listInfo.rs.length==0"></dom-nodata>
+      <dom-nodata v-show="noData"></dom-nodata>
     </div>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 
-// import aa from "@/components/widget/videoboxrank";
+import loadingPage from "@/components/widget/loading";
+
 import domVideoboxw from "@/components/widget/videoboxw";
 import domNodata from "@/components/widget/nodata";
-import imgLeft from "@/assets/left.png";
+import domHeader from "@/components/widget/header-back";
 
 export default {
   props: [],
@@ -33,25 +32,45 @@ export default {
         rs: [],
         total: "10",
       },
-      imgSrc:{
-        left:imgLeft
-      }
+      loading: false,
+      noData: true
+
     }
   },
   computed: {
 
   },
   methods: {
-    back() {
-      this.$router.go(-1);
+    loadMore() {
+
+      if (this.loading || this.noData) {
+        return;
+      }
+      this.listInfo.page++;
+      this.getSourceGroup();
     },
     getSourceGroup() {
+      this.loading = true;
+           this.noData=false;
       var that = this;
       var params = {
+        page: that.listInfo.page,
+        pagecount: that.listInfo.pagecount,
         gid: this.gid
       };
       var sucf = function(d) {
-        that.listInfo=d;
+        var rs = that.listInfo.rs;
+        var drs = d.rs;
+        rs.push.apply(rs, drs);
+        var page = d.page;
+        if (drs.length == 0) {
+          //没有返回数据
+          that.noData = true;
+        }
+        that.listInfo.page = d.page;
+        that.listInfo.rs = rs;
+        that.listInfo.total = d.total;
+        that.loading = false;
       };
       var errf = function(d) {
 
@@ -63,14 +82,17 @@ export default {
 
   },
   components: {
-    domVideoboxw,domNodata
+    loadingPage,
+    domVideoboxw,
+    domNodata,
+    domHeader
   },
   created() {
 
   },
   mounted() {
     if (this.type == "group") {
-      this.getSourceGroup()
+      this.getSourceGroup();
 
     }
   }
@@ -80,7 +102,7 @@ export default {
 </script>
 <style scoped>
 .list-con {
-  padding: 40px;
+  padding: 0 40px;
 }
 
 .dom-videoboxw {

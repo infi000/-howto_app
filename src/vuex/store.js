@@ -9,9 +9,16 @@ var invoke_yjw = app_invoke.invoke_yjw;
 var invoke_upload = app_invoke.invoke_upload;
 var invoke_jys = app_invoke.invoke_jys;
 
+
+
+
 const state = {
-  userinfo: {},
-  payInfo: {}
+  userinfo: USERINFO || {},
+  payInfo: {},
+  loginstatus: false,
+  access_token: '',
+  openid: '',
+
 };
 
 const getters = {
@@ -20,6 +27,16 @@ const getters = {
 
 
 const mutations = {
+  loginstatus(state, opt) {
+    //获取上传所需参数
+    var params = opt.params || {};
+    params.client = 'android';
+    params.v = 'test';
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    params.m = PARAMS.loginstatus;
+    invoke_jys(params, sucf, errf);
+  },
   upload(state, opt) {
     //1 上传表单
     //2 访问progress接口获取进度 设置循环每1秒访问一次
@@ -59,13 +76,17 @@ const mutations = {
     //添加订单
     var params = opt.params || {};
     var useroepnid = getCookie('USEROPENID');
-    // || 'oPYvv08p2ZJ1Un7uAOPjIXLLUAZc%7Cad283aa400af464c76d%7C1537429867%7C7a62a700fa18dc6634172786b8e285c1d8614e62';
+    // var useroepnid = 'oPYvv08p2ZJ1Un7uAOPjIXLLUAZc%7Cad283aa400af464c76d%7C1537429867%7C7a62a700fa18dc6634172786b8e285c1d8614e62';
     useroepnid = decodeURIComponent(useroepnid);
     var xopenid = useroepnid.split("|")[0] || "";
     var talk_id = useroepnid.split("|")[1] || "";
     params.xopenid = xopenid;
     params.talk_id = talk_id;
-    params.fromid = 10000;
+    // params.xopenid = 'oE6Dk0w36fkr4eSFAQUVCtwWebZo';
+    // params.talk_id = 'ad283aa400af464c76d';
+    // 如果是安卓fromid==10003
+    // 微信公众号fromid==10000
+    params.fromid = 10003;
     var sucf = opt.sucf || "";
     var errf = opt.errf || "";
     params.m = PARAMS.addOrder;
@@ -188,7 +209,8 @@ const mutations = {
     var sucf = opt.sucf || "";
     var errf = opt.errf || "";
     invoke_yjw(path, params, sucf, errf);
-  },  getSourceShow(state, opt) {
+  },
+  getSourceShow(state, opt) {
     //查询专栏下资源
     var params = opt.params || {};
     var path = PARAMS.getSourceShow;
@@ -205,7 +227,7 @@ const mutations = {
     oid = oid.split("|")[0] || "";
     // ||'oPYvv08p2ZJ1Un7uAOPjIXLLUAZc';
     params.oid = oid;
-    params.type = "1";
+    params.type = "100";
     var sucf = opt.sucf || "";
     var errf = opt.errf || "";
     params.m = PARAMS.getUploadParams;

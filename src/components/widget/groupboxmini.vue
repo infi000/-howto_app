@@ -15,7 +15,7 @@
 <script>
 /*jshint esversion: 6 */
 export default {
-  props: ['info'],
+  props: ['info','sid'],
   data() {
     var groupInfo = this.info || {};
     return {
@@ -27,20 +27,9 @@ export default {
   },
   methods: {
     gogroup(opt) {
-      var gid = opt.id;
+      var gid = this.sid ||opt.sid;
       this.$router.push({ path: 'list', query: { type: 'group', gid: gid } });
     },
-    // funname(){
-    //     var that=this;
-    //     var params={};
-    //     var sucf=function(d){
-
-    //     };
-    //     var errf=function(d){
-
-    //     };
-    //     this.$store.commit('funname',{})
-    // }
   },
   watch: {
 

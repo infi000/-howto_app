@@ -1,10 +1,7 @@
 <template>
-  <div class="mebox-page">
-    <mt-header fixed title="上传视频">
-      <router-link to="/mebox" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-    </mt-header>
+  <div class="page">
+    <dom-header :title="'上传视频'" :mrb40="true"></dom-header>
+
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell">
         <div class="weui-cell__hd">
@@ -108,8 +105,9 @@
   </div>
 </template>
 <script>
-import { MessageBox } from 'mint-ui';
+import domHeader from "@/components/widget/header-back";
 import { Toast } from 'mint-ui';
+
 /*jshint esversion: 6 */
 export default {
   props: [],
@@ -357,7 +355,7 @@ export default {
     }
   },
   components: {
-
+domHeader
   },
   created() {
 

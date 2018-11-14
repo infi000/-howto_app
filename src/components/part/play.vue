@@ -1,20 +1,18 @@
 <template>
   <div class="page">
     <!-- header -->
-    <mt-header title="视频展示">
-      <div slot="left" class="header-back" @click="goback"> <img :src="imgSrc.left" alt="" width="100%"> </div>
-    </mt-header>
+    <dom-header :title="'视频展示'" :mrb40="true"></dom-header>
     <div class="play-box">
       <div class="preview-box">
-        <template v-if="!playing">
+        <div v-show="!playing" style="height: 100%;width: 100%">
           <img v-lazy="videoInfo.thumbinal" alt="" class="preview-img">
           <div class="preview-mask">
             <a class="play-btn" @click="handlePlay">
              <img :src="imgSrc.play" alt="" width="100%" height="100%">
           </a>
           </div>
-        </template>
-        <video v-else :src="videoInfo.source" width="100%" height="100%" controls="" x5-playsinline="" playsinline="" webkit-playsinline="" style="background: #000"></video>
+        </div>
+        <video v-show="playing" :src="videoInfo.source" width="100%" height="100%" controls="" x5-playsinline="" playsinline="" webkit-playsinline="" style="background: #000" ref="dom_video"></video>
       </div>
       <dl class="text-left">
         <dt class="f1">{{videoInfo.title}}</dt>
@@ -43,14 +41,16 @@
         </div>
       </div>
     </div>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
+import loadingPage from "@/components/widget/loading";
 import Swiper from "swiper";
 import playbtn from "@/assets/play_btn.png";
 import domVideoboxh from "@/components/widget/videoboxh";
-import imgLeft from "@/assets/left.png";
+import domHeader from "@/components/widget/header-back";
 
 export default {
   props: [],
@@ -59,7 +59,6 @@ export default {
     return {
       imgSrc: {
         play: playbtn,
-          left:imgLeft
       },
       sid: sid,
       videoInfo: {},
@@ -71,6 +70,7 @@ export default {
       },
       auth: '0',
       playing: false,
+      loading: false
     }
   },
   computed: {
@@ -88,19 +88,34 @@ export default {
         this.playing = true;
         var sid = this.sid;
         this.addPlayStatistics(sid);
+        this.playVideo();
       } else {
         //提示去付费
-        var videoInfo = this.videoInfo
+        var videoInfo = this.videoInfo;
         this.$router.push({ name: 'pay', params: { info: videoInfo } });
       }
     },
+    // handlePlay() {
+
+    //     //临时用 测试付费 以后删掉 用上面的
+    //     var videoInfo = this.videoInfo;
+    //     this.$router.push({ name: 'pay', params: { info: videoInfo } });
+
+    // },
+    playVideo() {
+      //播放视频
+      var video = this.$refs.dom_video;
+      video.play();
+    },
     getVideoFromId(sid) {
+      this.loading = true;
       var that = this;
       var params = {
         sid: sid
       };
       var sucf = function(d) {
         that.videoInfo = d;
+        that.loading = false;
       };
       var errf = function(d) {
 
@@ -143,7 +158,9 @@ export default {
 
   },
   components: {
-    domVideoboxh
+    loadingPage,
+    domVideoboxh,
+    domHeader
   },
   created() {
 
@@ -153,7 +170,6 @@ export default {
     var sid = this.sid;
     this.getVideoFromId(sid);
     this.getVideoAuth(sid);
-
     this.getSourceShow();
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 'auto',

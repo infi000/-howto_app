@@ -3,7 +3,7 @@
     <article class="weui-article">
       <section class="text-center">
         <div class="weui-flex headbox">
-          <template v-if="login">
+          <template v-if="loginstatus">
             <!-- 已登录 -->
             <div class="weui-flex__item">
               <div class="placeholder">
@@ -15,7 +15,7 @@
               </div>
             </div>
             <div class="weui-flex__item">
-              <div class="placeholder"> <span class="text-hide-1 headName">xiaoming</span></div>
+              <div class="placeholder"> <span class="text-hide-1 headName">{{userinfo['name']}}</span></div>
             </div>
             <div class="weui-flex__item">
               <div class="placeholder">
@@ -28,8 +28,10 @@
             </div>
             <div class="weui-flex__item">
               <dl>
-                <dt><div class="head-img"><img :src="userinfo['head']"  width="100%" height="100%"></div></dt>
-                <dd ><a class="btn-login">登陆</a></dd>
+                <dt>
+                  <div class="head-img"><img :src="imgSrc['head']" width="100%" height="100%"></div>
+                </dt>
+                <dd><a class="btn-login" onClick="window.login.JSWXLogin()">登陆</a></dd>
               </dl>
             </div>
             <div class="weui-flex__item">
@@ -76,21 +78,29 @@
         </div>
       </section>
     </article>
-    <div class="weui-flex me-con-2">
+    <div class="weui-flex me-con-2" @click="goto('playstatistics')">
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.ps" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>播放统计</span></div>
     </div>
-    <div class="weui-flex me-con-2">
+    <div class="weui-flex me-con-2" @click="goto('incomestatistics')">
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.mi" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>收入统计</span></div>
     </div>
-    <div class="weui-flex me-con-2">
+    <div class="weui-flex me-con-2" @click="goto('cash')">
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.mi" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>提现</span></div>
     </div>
-    <div class="weui-flex me-con-2">
+    <div class="weui-flex me-con-2" @click="goto('upload')">
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.uv" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>上传视频</span></div>
+    </div>
+    <div class="weui-flex me-con-2" @click="goto('about')">
+      <div class="me-con-2-l"><img slot="icon" :src="imgSrc.gy" height="100%" class="mt-cell-img"></div>
+      <div class="weui-flex__item text-left"><span>关于</span></div>
+    </div>
+    <div class="weui-flex me-con-2" @click="goto('dev')" v-if="false">
+      <div class="me-con-2-l"><img slot="icon" :src="imgSrc.uv" height="100%" class="mt-cell-img"></div>
+      <div class="weui-flex__item text-left"><span>查看信息</span></div>
     </div>
   </div>
 </template>
@@ -103,20 +113,13 @@ import mvSrc from "@/assets/mv.png";
 import psSrc from "@/assets/ps.png";
 import miSrc from "@/assets/mi.png";
 import uvSrc from "@/assets/uv.png";
+import gySrc from "@/assets/gy.png";
 export default {
   props: [],
   data() {
-    var userinfo = {
-      name: USERINFO[0] || '未知',
-      sex: USERINFO[1],
-      addr1: USERINFO[2] || '未知',
-      addr2: USERINFO[3] || '未知',
-      addr3: USERINFO[4] || '未知',
-      head: USERINFO[5] || dlSrc,
 
-    };
     return {
-      userinfo: userinfo,
+
       imgSrc: {
         ph: phSrc,
         bought: boughtSrc,
@@ -124,17 +127,38 @@ export default {
         ps: psSrc,
         mi: miSrc,
         uv: uvSrc,
+        gy: gySrc,
+        head: dlSrc
       },
-      login:false
 
     };
   },
   computed: {
+    loginstatus() {
+      var s = this.$store.state.loginstatus;
+      return s;
+    },
+    userinfo() {
+      var userinfo = {};
+      userinfo.name = this.$store.state.userinfo[0] || '未知';
+      userinfo.sex = this.$store.state.userinfo[1];
+      userinfo.addr1 = this.$store.state.userinfo[2] || '未知';
+      userinfo.addr2 = this.$store.state.userinfo[3] || '未知';
+      userinfo.addr3 = this.$store.state.userinfo[4] || '未知';
+      userinfo.head = this.$store.state.userinfo[5] || dlSrc;
 
+      return userinfo;
+    }
   },
   methods: {
     goto(url) {
-      this.$router.push({ path: url, query: {} })
+      this.$router.push({ path: url, query: {} });
+    },
+    handleLogin() {
+      // window.login.AndroidToJS('param');
+      window.login.JSWXLogin();
+
+
     },
   },
   watch: {
@@ -211,10 +235,12 @@ export default {
   width: 92px;
   height: 40px;
 }
-.btn-login{
+
+.btn-login {
   color: #fff;
   font-size: 33px;
   display: inline-block;
   margin-top: 20px;
 }
+
 </style>

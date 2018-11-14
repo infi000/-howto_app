@@ -2,9 +2,6 @@
   <div class="page">
     <!-- header -->
     <mt-header title="排行榜">
-      <!--      <router-link to="/home" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link> -->
     </mt-header>
     <!-- navbar -->
     <div class="nav-rank">
@@ -35,10 +32,12 @@
         <div class="con-rank-r"></div>
       </div>
     </div>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
+import loadingPage from "@/components/widget/loading";
 import domvideoboxrank from "@/components/widget/videoboxrank";
 export default {
   props: [],
@@ -56,7 +55,8 @@ export default {
         pagecount: 10,
         rs: [],
         total: "10",
-      }
+      },
+      loading: false
     }
   },
   computed: {
@@ -68,11 +68,14 @@ export default {
       this.getSourceShow(sfid)
     },
     getSourceShow(sfid) {
+      this.loading = true;
       var that = this;
       var params = {
         sfid: sfid
       };
       var sucf = function(d) {
+        that.loading = false;
+
         if (sfid == 4) {
           that.poplist = d;
         } else {
@@ -89,6 +92,7 @@ export default {
 
   },
   components: {
+    loadingPage,
     domvideoboxrank
   },
   created() {

@@ -21,7 +21,7 @@
 import playmini from "@/assets/like.png"
 
 export default {
-  props: ['info', 'desc'], //1info:主要信息,2desc:是否有描述信息
+  props: ['info', 'desc', 'sid'], //1info:主要信息,2desc:是否有描述信息
   data() {
     var groupInfo = this.info || {};
     return {
@@ -48,9 +48,9 @@ export default {
     //     this.$store.commit('funname',{})
     // }
 
-    gogroup(opt){
-      var gid=opt.id;
-      this.$router.push({path:'list',query:{type:'group',gid:gid}});
+    gogroup(opt) {
+      var gid = this.sid || opt.sid;
+      this.$router.push({ path: 'list', query: { type: 'group', gid: gid } });
     }
   },
   watch: {

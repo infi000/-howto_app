@@ -1,20 +1,23 @@
 <template>
   <div class="page">
-    <dom-header :title="'已购视频'" :mrb40="true" :url="'me'"></dom-header>
-    <div class="con" v-infinite-scroll="loadMore" infinite-scroll-immediate-check="false">
-      <domVideoboxw v-for="(item,index) in videoList.rs" :key="item.id" class="dom-videoboxw" :info="item"></domVideoboxw>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(item,index) in videoList.rs" :key="index">
+          <video :src="item.source" controls=false x5-playsinline="" playsinline="" webkit-playsinline="" style="background: #000"></video>
+          <p>asdfasdfasdfasdfasdfasf</p>
+        </div>
+      </div>
     </div>
-    <dom-nodata v-show="noData"></dom-nodata>
     <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
-import loadingPage from "@/components/widget/loading";
-import domVideoboxw from "@/components/widget/videoboxw";
-import domHeader from "@/components/widget/header-back";
+
+// import aa from "@/components/widget/videoboxrank";
+import Swiper from "swiper";
 import domNodata from "@/components/widget/nodata";
-import { Toast } from 'mint-ui';
+import loadingPage from "@/components/widget/loading";
 
 export default {
   props: [],
@@ -24,7 +27,7 @@ export default {
         page: 1,
         pagecount: 10,
         rs: [],
-        total: 0
+        total: "10",
       },
       loading: false,
       noData: true
@@ -34,23 +37,18 @@ export default {
 
   },
   methods: {
-    loadMore() {
-      if (this.loading || this.noData) {
-        return;
-      }
-      this.videoList.page++;
-      this.getBoughtSource();
-    },
-    getBoughtSource() {
+    getVideo() {
       this.loading = true;
       this.noData = false;
-
       var that = this;
       var params = {
+        // title: title,
         page: that.videoList.page,
         pagecount: that.videoList.pagecount,
       };
       var sucf = function(d) {
+
+
         var rs = that.videoList.rs;
         var drs = d.rs;
         rs.push.apply(rs, drs);
@@ -63,6 +61,8 @@ export default {
         that.videoList.rs = rs;
         that.videoList.total = d.total;
         that.loading = false;
+
+
       };
       var errf = function(d) {
         Toast({
@@ -72,7 +72,7 @@ export default {
         });
         that.loading = false;
       };
-      this.$store.commit('getBoughtSource', { params: params, sucf: sucf, errf: errf });
+      this.$store.commit('getVideo', { params: params, sucf: sucf, errf: errf })
     }
   },
   watch: {
@@ -80,27 +80,42 @@ export default {
   },
   components: {
     loadingPage,
-    domVideoboxw,
-    domHeader,
     domNodata
   },
   created() {
 
   },
   mounted() {
-    this.getBoughtSource();
+    this.getVideo();
+
+          var swiper = new Swiper('.swiper-container', {
+            direction: 'vertical',
+            loop: true,
+            observer:true
+          });
   }
 
 };
 
 </script>
 <style scoped>
-.dom-videoboxw {
-  margin-bottom: 36px;
+p {
+  position: absolute;
+  bottom: 100px;
+  z-index: 1
 }
 
-.con {
-  padding: 0 20px;
+.swiper-container {
+  width: 100%;
+  height: 100%;
 }
 
+.swiper-slide {
+
+  background: #ccc;
+}
+video{
+width: 750px;
+height: 562px;
+}
 </style>

@@ -5,7 +5,48 @@
 </template>
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  methods: {
+    loginstatus() {
+      var that = this;
+
+      var token = this.$route.query.accesstoken || "";
+      var openid = this.$route.query.openid || "";
+      var loginstatus = this.$store.state.loginstatus;
+      if (!loginstatus) {
+        // if (!token && !openid) {
+        if (token && openid) {
+
+          this.$store.state.access_token = token;
+          this.$store.state.openid = openid;
+
+          var params = {
+            token: token,
+            openid: openid,
+          };
+
+          var sucf = function(d) {
+            //成功
+            that.$store.state.loginstatus = true;
+            that.$store.state.userinfo = USERINFO || {};
+
+          };
+          var errf = function(d) {
+            //失败
+            window.login.JSWXLogin();
+
+          };
+          this.$store.commit('loginstatus', { params: params, sucf: sucf, errf: errf });
+        }
+
+      }
+
+    },
+  },
+  mounted() {
+    this.loginstatus();
+
+  }
 }
 
 </script>
@@ -19,9 +60,9 @@ export default {
 }
 
 .mint-header {
-  background-color: #e4413c;
-  height: 100px;
-  font-size: 34px;
+  background-color: #e4413c!important;
+  height: 100px!important;
+  font-size: 34px!important;
 }
 
 .page {
@@ -42,6 +83,14 @@ export default {
   left: 0;
   right: 0;
   background: #e4413c;
+}
+
+.mrt-40 {
+  margin-top: 40px;
+}
+
+.mrb-40 {
+  margin-bottom: 40px;
 }
 
 .text-center {
@@ -85,12 +134,13 @@ export default {
   height: 25px;
   display: inline-block;
 }
-.header-back{
-  width:18px;
+
+.header-back {
+  width: 18px;
 }
 
 img[lazy=error] {
-  background-image: url('/static/img/error.png');
+  background-image: url('/static/img/test2.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

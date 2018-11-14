@@ -1,34 +1,40 @@
 <template>
   <div class="page">
-    <dom-header :title="'已购视频'" :mrb40="true" :url="'me'"></dom-header>
-    <div class="con" v-infinite-scroll="loadMore" infinite-scroll-immediate-check="false">
-      <domVideoboxw v-for="(item,index) in videoList.rs" :key="item.id" class="dom-videoboxw" :info="item"></domVideoboxw>
+    <!-- header -->
+    <dom-header :title="'搜索结果'" :mrb40="true"></dom-header>
+    <div class="list-con" v-infinite-scroll="loadMore" infinite-scroll-immediate-check="false">
+      <dom-videoboxw v-for="(item,index) in videoList.rs" :key="index" :info="item" class="dom-videoboxw" :sid="item.id"></dom-videoboxw>
+      <dom-nodata v-show="noData"></dom-nodata>
     </div>
-    <dom-nodata v-show="noData"></dom-nodata>
     <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
+
 import loadingPage from "@/components/widget/loading";
 import domVideoboxw from "@/components/widget/videoboxw";
-import domHeader from "@/components/widget/header-back";
 import domNodata from "@/components/widget/nodata";
+import domHeader from "@/components/widget/header-back";
 import { Toast } from 'mint-ui';
 
 export default {
   props: [],
   data() {
+    var title = this.$route.query.title || "";
+
     return {
+      title: title,
       videoList: {
         page: 1,
         pagecount: 10,
         rs: [],
-        total: 0
+        total: "10",
       },
       loading: false,
-      noData: true
-    };
+      noData: true,
+
+    }
   },
   computed: {
 
@@ -39,19 +45,23 @@ export default {
         return;
       }
       this.videoList.page++;
-      this.getBoughtSource();
+      this.getVideo();
+
     },
-    getBoughtSource() {
+    getVideo() {
       this.loading = true;
       this.noData = false;
-
       var that = this;
+      var title = this.title;
       var params = {
+        title: title,
         page: that.videoList.page,
         pagecount: that.videoList.pagecount,
       };
       var sucf = function(d) {
-        var rs = that.videoList.rs;
+
+
+                var rs = that.videoList.rs;
         var drs = d.rs;
         rs.push.apply(rs, drs);
         var page = d.page;
@@ -65,14 +75,14 @@ export default {
         that.loading = false;
       };
       var errf = function(d) {
-        Toast({
+     Toast({
           message: '获取信息失败',
           position: 'top',
           duration: 3000
         });
         that.loading = false;
       };
-      this.$store.commit('getBoughtSource', { params: params, sucf: sucf, errf: errf });
+      this.$store.commit('getVideo', { params: params, sucf: sucf, errf: errf})
     }
   },
   watch: {
@@ -81,26 +91,26 @@ export default {
   components: {
     loadingPage,
     domVideoboxw,
-    domHeader,
-    domNodata
+    domNodata,
+    domHeader
   },
   created() {
 
   },
   mounted() {
-    this.getBoughtSource();
+    this.getVideo();
   }
 
 };
 
 </script>
 <style scoped>
-.dom-videoboxw {
-  margin-bottom: 36px;
+.list-con {
+  padding: 0 40px;
 }
 
-.con {
-  padding: 0 20px;
+.dom-videoboxw {
+  margin-bottom: 18px;
 }
 
 </style>

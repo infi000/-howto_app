@@ -12,9 +12,9 @@
             <div class="weui-flex__item">
               <span class="tag-con" v-show="filterTag(videoInfo.keys)">{{filterTag(videoInfo.keys)}}</span>
             </div>
-            <div class="weui-flex__item">
-            </div>
-            <div class="weui-flex__item">
+ <!--            <div class="weui-flex__item">
+            </div> -->
+            <div class="">
               <div class="icon-con">
                 <img :src="imgSrc.play" alt="" height="100%">
               </div>
@@ -30,7 +30,7 @@
 /*jshint esversion: 6 */
 import playmini from "@/assets/playmini.png"
 export default {
-  props: ['info'],
+  props: ['info', 'sid'],
   data() {
     var videoInfo = this.info || {};
     return {
@@ -45,9 +45,7 @@ export default {
   },
   methods: {
     goplay() {
-      console.log(this.videoInfo)
-      var sid = this.videoInfo.id;
-      console.log("sid",sid)
+      var sid = this.sid || this.videoInfo.sid;
       this.$router.push({ path: '/play', query: { sid: sid } })
     },
     // funname(){

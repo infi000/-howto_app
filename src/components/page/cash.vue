@@ -1,18 +1,13 @@
 <template>
-  <div class="mebox-page">
-    <mt-header fixed title="提现">
-      <router-link to="/mebox" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-    </mt-header>
+  <div class="page">
+   <dom-header :title="'提现'" :mrb40="true"></dom-header>
     <p class="tagName">共提现{{chartData.total}}元
       <br>账户余额{{account}}元</p>
     <template v-if="chartData['rows'].length>0">
       <ve-line :data="chartData" :settings="chartSettings"></ve-line>
     </template>
-    <div class="weui-loadmore weui-loadmore_line" v-else>
-      <span class="weui-loadmore__tips">暂无数据</span>
-    </div>
+    <dom-nodata v-else></dom-nodata>
+
     <a class="weui-btn weui-btn_primary" style="width: 200px" @click="handleCash">去提现</a>
     <loading-page v-show="loading"></loading-page>
   </div>
@@ -21,7 +16,10 @@
 /*jshint esversion: 6 */
 import VeLine from 'v-charts/lib/line.common';
 import loadingPage from "@/components/widget/loading";
+import domHeader from "@/components/widget/header-back";
+import domNodata from "@/components/widget/nodata";
 import { Toast } from 'mint-ui';
+
 export default {
   props: [],
   data() {
@@ -44,10 +42,6 @@ export default {
 
   },
   methods: {
-    goto(url) {
-
-      // this.$router.push({name:'cashment',params:{total:total}});
-    },
     handleCash() {
       if (this.account < 1) {
         //提示小于1元无法提现
@@ -98,7 +92,9 @@ export default {
   },
   components: {
     VeLine,
-    loadingPage
+    loadingPage,
+        domHeader,
+    domNodata
   },
   created() {
 

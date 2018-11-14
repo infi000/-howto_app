@@ -1,9 +1,7 @@
 <template>
   <div class="page">
     <!-- header -->
-    <mt-header :title="category.cname">
-      <div slot="left" class="header-back" @click="back"> <img :src="imgSrc.left" alt="" width="100%"> </div>
-    </mt-header>
+    <dom-header :title="category.cname" :mrb40="false"></dom-header>
     <!-- <dom-search class="sortdetail-search" ></dom-search> -->
     <div class="swiper-container" v-show="category.child">
       <div class="swiper-wrapper">
@@ -12,52 +10,65 @@
         </div>
       </div>
     </div>
-    <div class="sortdetail-con">
-      <dom-videoboxw v-for="(item,index) in videoList.rs" class="dom-videoboxw" :key="index" :info="item"></dom-videoboxw>
+    <div class="sortdetail-con" v-infinite-scroll="loadMore" infinite-scroll-immediate-check="false">
+      <dom-videoboxw v-for="(item,index) in videoList.rs" class="dom-videoboxw" :key="index" :info="item" :sid="item.id"></dom-videoboxw>
+      <dom-nodata v-show="noData"></dom-nodata>
     </div>
+    <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 
 // import aa from "@/components/widget/videoboxrank";
+import loadingPage from "@/components/widget/loading";
 import domVideoboxw from "@/components/widget/videoboxw";
 import domSearch from "@/components/widget/search";
+import domHeader from "@/components/widget/header-back";
+import domNodata from "@/components/widget/nodata";
 import Swiper from "swiper";
 import { Toast } from 'mint-ui';
-import imgLeft from "@/assets/left.png";
 
 export default {
   props: [],
   data() {
     var id = this.$route.query.id;
+    var level = this.$route.query.level;
     return {
       id: id, //分类ID
+      level: level, //分类级别
       videoList: {
         page: 1,
-        pagecount: 10,
+        pagecount: 20,
         rs: [],
         total: 0
       },
-      imgSrc: {
-        left: imgLeft
-      },
-      category: {} //分类的信息
-    }
+      category: {}, //分类的信息
+      loading: false,
+      noData: true,
+    };
   },
   computed: {
 
   },
   methods: {
-    back() {
-      this.$router.go(-1);
+    loadMore() {
+      if (this.loading || this.noData) {
+        return;
+      }
+      this.videoList.page++;
+      this.getVideo();
+      // setTimeout(() => {
+      //   this.loading = false;
+      // }, 2500);
     },
     goto(id) {
-      this.$router.push({ path: 'sortdetail', query: { id: id } });
+      this.$router.push({ path: 'sortdetail', query: { id: id, level: 'column' } });
     },
-    getCategoryById(id) {
+    getCategoryById() {
       //获取分类数据
       var that = this;
+      var id = this.id;
       var params = {
         status: 1,
         id: id
@@ -72,17 +83,31 @@ export default {
       this.$store.commit('getCategory', { params: params, sucf: sucf });
     },
     getVideo() {
-
+      this.loading = true;
+      this.noData = false;
       var that = this;
+      var level = this.level;
+      var id = this.id;
       var params = {
-        // page: that.videoList.page,
-        // pagecount: that.videoList.pagecount,
+        page: that.videoList.page,
+        pagecount: that.videoList.pagecount,
         status: 1,
         sort: 'weight:desc,ctime:desc' //desc小写，asc大写
       };
-
+      params[level] = id;
       var sucf = function(d) {
-        that.videoList = d;
+        var rs = that.videoList.rs;
+        var drs = d.rs;
+        rs.push.apply(rs, drs);
+        var page = d.page;
+        if (drs.length == 0) {
+          //没有返回数据
+          that.noData = true;
+        }
+        that.videoList.page = d.page;
+        that.videoList.rs = rs;
+        that.videoList.total = d.total;
+        that.loading = false;
       };
       var errf = function(d) {
         Toast({
@@ -90,34 +115,44 @@ export default {
           position: 'top',
           duration: 3000
         });
-
+        that.loading = false;
       };
 
       this.$store.commit("getVideo", { params: params, sucf: sucf, errf: errf });
     },
-
+    init() {
+      this.videoList = {
+        page: 1,
+        pagecount: 20,
+        rs: [],
+        total: 0
+      };
+      this.getCategoryById();
+      this.getVideo();
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 30,
+        // centeredSlides: true,
+        observer: true,
+        initialSlide: 0
+      });
+    }
   },
   watch: {
 
   },
   components: {
+    loadingPage,
     domVideoboxw,
-    domSearch
+    domSearch,
+    domHeader,
+    domNodata
   },
   created() {
 
   },
   mounted() {
-    var id = this.id;
-    this.getCategoryById(id);
-    this.getVideo();
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 'auto',
-      spaceBetween: 30,
-      // centeredSlides: true,
-      observer: true,
-      initialSlide: 0
-    });
+    this.init();
   },
   beforeRouteUpdate(to, from, next) {
     // 在当前路由改变，但是该组件被复用时调用
@@ -125,16 +160,11 @@ export default {
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
     var id = to.query.id;
-    this.getCategoryById(id);
-    this.getVideo();
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 'auto',
-      spaceBetween: 30,
-      centeredSlides: true,
-      observer: true,
-      initialSlide: 0
-    });
-    next()
+    var level = to.query.level;
+    this.id = id;
+    this.level = level;
+    this.init();
+    next();
   },
 
 };

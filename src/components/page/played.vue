@@ -1,24 +1,19 @@
 <template>
-  <div class="mebox-page">
-    <mt-header fixed title="播放历史">
-        <mt-button icon="back"  slot="left" @click="back"></mt-button>
-    </mt-header>
-    <p class="tagName">播放历史</p>
-    <a class="weui-media-box weui-media-box_appmsg" v-for="(item,index) in videoList.rs" @click="play(item.sid)">
-      <div class="weui-media-box__hd">
-        <img class="weui-media-box__thumb" v-lazy="item.thumbinal" alt="">
-      </div>
-      <div class="weui-media-box__bd">
-        <h4 class="weui-media-box__title">{{item.title}}</h4>
-        <p class="weui-media-box__desc">{{item.describe}}</p>
-      </div>
-    </a>
+  <div class="page">
+    <dom-header :title="'播放历史'" :mrb40="true"></dom-header>
+    <div class="con" v-infinite-scroll="loadMore" infinite-scroll-immediate-check="false">
+      <domVideoboxw v-for="(item,index) in videoList.rs" :key="item.id" class="dom-videoboxw" :info="item"></domVideoboxw>
+    </div>
+    <dom-nodata v-show="noData"></dom-nodata>
     <loading-page v-show="loading"></loading-page>
   </div>
 </template>
 <script>
 /*jshint esversion: 6 */
 import loadingPage from "@/components/widget/loading";
+import domVideoboxw from "@/components/widget/videoboxw";
+import domHeader from "@/components/widget/header-back";
+import domNodata from "@/components/widget/nodata";
 import { Toast } from 'mint-ui';
 
 export default {
@@ -27,47 +22,66 @@ export default {
     return {
       videoList: {
         page: 1,
-        pagecount: 20,
+        pagecount: 10,
         rs: [],
         total: 0,
       },
-      loading: false
+      loading: false,
+      noData: true
     };
   },
   computed: {
 
   },
-  methods: {   back() {
-      this.$router.go(-1);
-    },
-    play(id) {
-      var id = id || '';
-      this.$router.push({ path: "videopage", query: { id: id } });
+  methods: {
+    loadMore() {
+      if (this.loading || this.noData) {
+        return;
+      }
+      this.videoList.page++;
+      this.getPlayedSource();
     },
     getPlayedSource() {
       this.loading = true;
+      this.noData=false;
       var that = this;
-      var params = {};
+      var params = {
+        page: that.videoList.page,
+        pagecount: that.videoList.pagecount,
+      };
       var sucf = function(d) {
+        var rs = that.videoList.rs;
+        var drs = d.rs;
+        rs.push.apply(rs, drs);
+        var page = d.page;
+        if (drs.length == 0) {
+          //没有返回数据
+          that.noData = true;
+        }
+        that.videoList.page = d.page;
+        that.videoList.rs = rs;
+        that.videoList.total = d.total;
         that.loading = false;
-        that.videoList = d;
       };
       var errf = function(d) {
         Toast({
-          message: '获取信息失败',
+          message:d,
           position: 'top',
           duration: 3000
         });
         that.loading = false;
       };
-      this.$store.commit('getPlayedSource', { sucf: sucf, errf: errf });
+      this.$store.commit('getPlayedSource', { params: params, sucf: sucf, errf: errf });
     }
   },
   watch: {
 
   },
   components: {
-    loadingPage
+    loadingPage,
+    domVideoboxw,
+    domHeader,
+    domNodata
   },
   created() {
 
@@ -80,6 +94,12 @@ export default {
 
 </script>
 <style scoped>
+.dom-videoboxw {
+  margin-bottom: 36px;
+}
 
+.con {
+  padding: 0 20px;
+}
 
 </style>

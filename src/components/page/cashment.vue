@@ -1,10 +1,6 @@
 <template>
-  <div class="mebox-page">
-    <mt-header fixed title="提现">
-      <router-link to="/cash" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-    </mt-header>
+  <div class="page">
+    <dom-header :title="'提现'" :mrb40="true"></dom-header>
     <p class="tagName">账户金额：{{total}}元</p>
     <div class="pay_box">
       <div class="page-hd">
@@ -28,11 +24,13 @@
 <script>
 /*jshint esversion: 6 */
 import loadingPage from "@/components/widget/loading";
+import domHeader from "@/components/widget/header-back";
 import { Toast } from 'mint-ui';
+
 export default {
   props: [],
   data() {
-    var total=this.$route.params.total;
+    var total = this.$route.params.total;
     return {
       total: total,
       input: 0,
@@ -99,7 +97,8 @@ export default {
 
   },
   components: {
-    loadingPage
+    loadingPage,
+        domHeader,
   },
   created() {
 

@@ -98,7 +98,8 @@ export default {
       var url = url || '/';
       this.choose = url;
       this.$router.push({ path: url });
-    }
+    },
+
   },
   watch: {
 

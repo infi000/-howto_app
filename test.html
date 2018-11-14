@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Carson</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta content="email=no" name="format-detection" />
+  <meta name="apple-touch-fullscreen" content="YES">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="red">
+  <title>HOWTO</title>
+  <link href="./static/css/weui.min.css" rel="stylesheet">
+  <link href="//at.alicdn.com/t/font_842275_5mtei1qiedj.css" rel="stylesheet">
+  <script src="./static/js/viewport-units.js"></script>
+  <script src="./static/js/tools.js"></script>
+  <script>
+  function callAndroid() {
+    // 由于对象映射，所以调用login对象等于调用Android映射的对象 login.JSWXLogin("js调用了android中的JSWXLogin方法");
+    window.login.JSWXLogin();
+  }
+
+
+  var Global = {
+    login: function(str) {
+      alert(str);
+      var url = 'https://xcx-howdu.yaotv.tvm.cn/wapi/i.php?m=2104&state=2bf8314253ab641d&talk_id=ad283aa400af464c76d&v=test' + str;
+      var req = new XMLHttpRequest();
+      req.open("GET", url, 1);
+      req.onreadystatechange = function() {
+        console.log(req)
+        // if (req.readyState == 4) {
+        //     if (req.status == 200) {
+
+
+        //     } else {
+
+        //     }
+        // }
+      };
+      req.send(null);
+
+    }
+  };
+  window.onload = function() {
+    window.viewportUnitsBuggyfill.init({
+      hacks: window.viewportUnitsBuggyfillHacks
+    });
+
+  }
+
+  </script>
+</head>
+
+<body>
+  <button type="button" id="button1" onclick="callAndroid()">tttttttttttttest</button>
+  <button type="button" id="button2" onclick="callAndroid()">tttttttttttttest</button>
+</body>
+
+</html>

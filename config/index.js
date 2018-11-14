@@ -10,7 +10,17 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/howtoapi': { //将www.exaple.com印射为/apis
+        // target: 'https://39.105.15.139', // 接口域名
+        target: 'https://xcx-howdu.yaotv.tvm.cn', // 接口域名
+        secure: false, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, //是否跨域
+        pathRewrite: {
+          '^/howtoapi': '/howtoapi' //需要rewrite的,
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -43,6 +53,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
+    // assetsPublicPath: '/frontapp_test/',
     assetsPublicPath: '/frontapp/',
 
     /**
