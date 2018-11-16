@@ -218,6 +218,14 @@ const mutations = {
     var errf = opt.errf || "";
     invoke_yjw(path, params, sucf, errf);
   },
+  getReleSource(state, opt) {
+    //相近的资源通过KEY
+    var params = opt.params || {};
+    var path = PARAMS.getReleSource;
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    invoke_yjw(path, params, sucf, errf);
+  },
   getUploadParams(state, opt) {
 
     //获取上传所需参数

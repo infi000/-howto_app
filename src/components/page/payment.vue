@@ -1,6 +1,6 @@
 <template>
   <div class="page text-left">
-    <dom-header :title="'支付'" :mrb40="true"></dom-header>
+    <dom-header :title="'支付'" :mrb40="true" :url="'home'"></dom-header>
     <div class="con">
       <div class="weui-cells__title">支付方式</div>
       <div class="weui-cells weui-cells_radio">

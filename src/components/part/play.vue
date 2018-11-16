@@ -5,7 +5,7 @@
     <div class="play-box">
       <div class="preview-box">
         <div v-show="!playing" style="height: 100%;width: 100%">
-          <img v-lazy="videoInfo.thumbinal" alt="" class="preview-img">
+          <img v-lazy="videoInfo.thumbinal" alt="" class="preview-img" :key="videoInfo.thumbinal">
           <div class="preview-mask">
             <a class="play-btn" @click="handlePlay">
              <img :src="imgSrc.play" alt="" width="100%" height="100%">
@@ -21,7 +21,7 @@
         </dd>
         <dd class="f3">
           <div class="weui-flex">
-            <div class="weui-flex__item"><span class="rank-money">{{videoInfo.price}}元</span>
+            <div class="weui-flex__item"><span class="rank-money" v-html="filterCash(videoInfo.price)"></span>
             </div>
             <div class="weui-flex__item text-right">
               <img :src="imgSrc.play" alt="" class="icon-con">
@@ -36,7 +36,7 @@
     </div>
     <div class="swiper-container ">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item,index) in grouplist.rs" :key="index">
+        <div class="swiper-slide" v-for="(item,index) in grouplist" :key="index">
           <dom-videoboxh :info="item"></dom-videoboxh>
         </div>
       </div>
@@ -62,12 +62,7 @@ export default {
       },
       sid: sid,
       videoInfo: {},
-      grouplist: {
-        page: 1,
-        pagecount: 10,
-        rs: [],
-        total: "10",
-      },
+      grouplist: [],
       auth: '0',
       playing: false,
       loading: false
@@ -79,6 +74,13 @@ export default {
   methods: {
     goback() {
       this.$router.go(-1);
+    },
+    filterCash(m) {
+      var res = "<span style='color:green'>免费</span>";
+      if (m > 0) {
+        res = "<b style='color:red'>" + m + "元</b>";
+      };
+      return res;
     },
     handlePlay() {
 
@@ -107,6 +109,20 @@ export default {
       var video = this.$refs.dom_video;
       video.play();
     },
+    getSourceShow() {
+      var that = this;
+      var params = {
+        sfid: 3
+      };
+      var sucf = function(d) {
+        that.grouplist = d.rs;
+        that.loading = false;
+      };
+      var errf = function(d) {
+
+      };
+      this.$store.commit('getSourceShow', { params: params, sucf: sucf });
+    },
     getVideoFromId(sid) {
       this.loading = true;
       var that = this;
@@ -116,25 +132,35 @@ export default {
       var sucf = function(d) {
         that.videoInfo = d;
         that.loading = false;
+        //通过关键字keys去搜索当前视频的相关资源
+        var keys = d.keys;
+        that.getReleSource(keys);
       };
       var errf = function(d) {
 
       };
       this.$store.commit('getVideoFromId', { params: params, sucf: sucf })
     },
-    getSourceShow(sfid) {
+    getReleSource(key) {
+      if(key==''){
+        return ;
+      }
+
       var that = this;
       var params = {
-        sfid: 3
+        key: key
       };
       var sucf = function(d) {
-        // sfid 1banner 2zl 3sp 6jc
-        that.grouplist = d;
+        // that.grouplist = d.rs;
+        var gl = that.grouplist;
+        var drs = d.rs;
+        gl.push.apply(gl, drs);
+        that.grouplist = gl;
       };
       var errf = function(d) {
 
       };
-      this.$store.commit('getSourceShow', { params: params, sucf: sucf })
+      this.$store.commit('getReleSource', { params: params, sucf: sucf })
     },
     getVideoAuth(sid) {
       var that = this;
@@ -168,16 +194,18 @@ export default {
   mounted() {
 
     var sid = this.sid;
+    this.getSourceShow();
     this.getVideoFromId(sid);
     this.getVideoAuth(sid);
-    this.getSourceShow();
+
+
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 'auto',
       spaceBetween: 10,
       observer: true,
-      centeredSlides: true,
+      // centeredSlides: true,
       initialSlide: 0,
-      loop: true
+      // loop: true
     });
   },
   beforeRouteUpdate(to, from, next) {
@@ -186,6 +214,7 @@ export default {
     // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
     // 可以访问组件实例 `this`
     var sid = to.query.sid;
+    this.getSourceShow();
     this.getVideoFromId(sid);
     this.getVideoAuth(sid);
 

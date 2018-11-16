@@ -54,6 +54,7 @@ export default {
       var that = this;
       var title = this.title;
       var params = {
+        status:1,
         title: title,
         page: that.videoList.page,
         pagecount: that.videoList.pagecount,

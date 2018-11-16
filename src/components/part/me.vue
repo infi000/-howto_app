@@ -98,7 +98,7 @@
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.gy" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>关于</span></div>
     </div>
-    <div class="weui-flex me-con-2" @click="goto('dev')" v-if="false">
+    <div class="weui-flex me-con-2" @click="goto('loopplay')" v-if="false">
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.uv" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>查看信息</span></div>
     </div>

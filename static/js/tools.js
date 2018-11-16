@@ -44,6 +44,7 @@ var PARAMS = {
   getOwnSource: 'm=Home&c=Source&a=ownSource', //获取用户播放资源
   getBoughtSource: 'm=Home&c=Source&a=purchasedSource', //获取用户购买资源
   getVideoAuth: 'm=Home&c=Source&a=isHasAuth', //查询video播放权限
+  getReleSource: 'm=Home&c=Source&a=releSource', //查询相近的资源通过KEY
   getPlayStatistics: 'm=Home&c=PlaySource&a=playStatistics', //获取统计播放
   addPlayStatistics: 'm=Home&c=PlaySource&a=play', //播放记录
   getCategory: 'm=Home&c=Category&a=search', //查询分类

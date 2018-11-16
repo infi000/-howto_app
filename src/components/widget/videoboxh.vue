@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     goplay() {
-      var sid = this.info.sid;
+      var sid = this.info.sid||this.info.id;
       this.$router.push({ path: '/play', query: { sid: sid } })
     },
     // funname(){
