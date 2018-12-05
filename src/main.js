@@ -8,7 +8,7 @@ import Vuex from 'vuex';
 // import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'swiper/dist/css/swiper.min.css'
-import { Toast, InfiniteScroll, Lazyload, Header, Spinner, Progress } from 'mint-ui'
+import { Toast, InfiniteScroll, Lazyload, Header, Spinner, Progress } from 'mint-ui';
 
 Vue.component(Spinner.name, Spinner);
 Vue.component(Header.name, Header);
@@ -84,4 +84,14 @@ window.payment_app = function(s) {
     router.push({ path: 'payment_err' });
 
   }
+};
+
+//录音结束app方面调用我的接口
+window.recordStop=function(opt){
+      Toast({
+        message: opt,
+        position: 'top',
+        duration: 5000
+      });
+   store.state.recorderInfo=opt;
 };

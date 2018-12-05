@@ -1,12 +1,12 @@
-// 正式
-var URL_DEV = {
-  yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi/index.php?',
-  // yjw: 'http://192.168.58.21/howto/index.php?',
-  jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi/i.php?',
-  upload: 'http://upload.howdu.cn', //视频服务器
-  video: 'http://video.howdu.cn', //视频服务器
-  img: 'http://www.howdu.cn/howapi', //图片服务器
-};
+// // 正式
+// var URL_DEV = {
+//   yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi/index.php?',
+//   // yjw: 'http://192.168.58.21/howto/index.php?',
+//   jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi/i.php?',
+//   upload: 'http://upload.howdu.cn', //视频服务器
+//   video: 'http://video.howdu.cn', //视频服务器
+//   img: 'http://www.howdu.cn/howapi', //图片服务器
+// };
 
 // // 测试2 微信端用
 // var URL_DEV = {
@@ -19,13 +19,13 @@ var URL_DEV = {
 
 
 // // app测试
-// var URL_DEV = {
-//   yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi/index.php?',
-//   jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi_test/i.php?',
-//   upload: 'http://upload.howdu.cn', //视频服务器
-//   video: 'http://video.howdu.cn', //视频服务器
-//   img: 'http://www.howdu.cn/howapi', //图片服务器
-// };
+var URL_DEV = {
+  yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi_test/index.php?',
+  jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi_test/i.php?',
+  upload: 'http://upload.howdu.cn', //视频服务器
+  video: 'http://video.howdu.cn', //视频服务器
+  img: 'http://www.howdu.cn/howapi', //图片服务器
+};
 
 
 // m=Home&c=&a=
@@ -52,8 +52,11 @@ var PARAMS = {
   getAccount: 'm=Home&c=Cash&a=account ', //获取账户金额
   getCashStatistics: 'm=Home&c=Cash&a=cashStatistics ', //获取账户金额
   getGroup: 'm=Home&c=Group&a=search', //查询专栏
+  addGroupView: 'm=Home&c=Group&a=aview', //增加专栏浏览
+  addGroupLike: 'm=Home&c=Group&a=alike', //增加专栏点赞
   getSourceGroup: 'm=Home&c=SourceGroup&a=search', //查询专栏资源
   getSourceShow: 'm=Home&c=SourceShow&a=search', //查询资源
+  getSourceFromAudio: 'm=Home&c=Audio&a=search', //查询资源
   getUploadParams: '50051', //获取上传视频所需信息
   // getUploadList: '50052', //获取上传文件列表
   // delUpload: '50053', //删除上传文件

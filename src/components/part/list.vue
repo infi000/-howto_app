@@ -51,7 +51,7 @@ export default {
     },
     getSourceGroup() {
       this.loading = true;
-           this.noData=false;
+      this.noData = false;
       var that = this;
       var params = {
         page: that.listInfo.page,
@@ -75,7 +75,20 @@ export default {
       var errf = function(d) {
 
       };
-      this.$store.commit('getSourceGroup', { params: params, sucf: sucf })
+      this.$store.commit('getSourceGroup', { params: params, sucf: sucf });
+    },
+    addGroupView() {
+      var that = this;
+      var params = {
+        gid: this.gid
+      };
+      var sucf = function(d) {
+
+      };
+      var errf = function(d) {
+
+      };
+      this.$store.commit('addGroupView', { params: params, sucf: sucf,errf:errf });
     }
   },
   watch: {
@@ -93,7 +106,7 @@ export default {
   mounted() {
     if (this.type == "group") {
       this.getSourceGroup();
-
+      this.addGroupView();
     }
   }
 

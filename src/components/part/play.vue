@@ -142,7 +142,7 @@ export default {
       this.$store.commit('getVideoFromId', { params: params, sucf: sucf })
     },
     getReleSource(key) {
-      if(key==''){
+      if(!key){
         return ;
       }
 

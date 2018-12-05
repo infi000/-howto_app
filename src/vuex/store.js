@@ -18,6 +18,7 @@ const state = {
   loginstatus: false,
   access_token: '',
   openid: '',
+  recorderInfo:'',//app录音返回给我的信息
 
 };
 
@@ -91,6 +92,28 @@ const mutations = {
     var errf = opt.errf || "";
     params.m = PARAMS.addOrder;
     invoke_jys(params, sucf, errf);
+  },
+  addGroupView(state, opt) {
+    var params = opt.params || {};
+    var path = PARAMS.addGroupView;
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    invoke_yjw(path, params, sucf, errf);
+  },
+  addGroupLike(state, opt) {
+    var params = opt.params || {};
+    var path = PARAMS.addGroupLike;
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    invoke_yjw(path, params, sucf, errf);
+  },
+  getSourceFromAudio(state, opt) {
+    //获取视频，搜索 通过语音
+    var params = opt.params || {};
+    var path = PARAMS.getSourceFromAudio;
+    var sucf = opt.sucf || "";
+    var errf = opt.errf || "";
+    invoke_yjw(path, params, sucf, errf);
   },
   getVideo(state, opt) {
     //获取视频，搜索

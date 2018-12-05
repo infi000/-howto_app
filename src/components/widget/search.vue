@@ -7,6 +7,7 @@
       </div>
     </form>
     <a class="btn-search" ref="btn" v-show="inputting" @click="handleSearch">确定</a>
+    <a class="btn-search" ref="btn" v-show="!inputting" @click="goto('searchresultaudio')">语音</a>
   </div>
 </template>
 <script>
@@ -47,7 +48,10 @@ export default {
         var title = this.input;
         this.$router.push({ path: "searchresult", query: { title: title } })
       }
-    }
+    },
+      goto(url) {
+      this.$router.push({ path: url, query: {} });
+    },
   },
   watch: {
 

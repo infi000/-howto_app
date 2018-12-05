@@ -23,6 +23,7 @@
     "postcss-viewport-units": "^0.1.6",
     "postcss-write-svg": "^3.0.1",
     "qs": "^6.5.2",
+    "recorder-js": "^1.0.7",
     "swiper": "^4.4.1",
     "v-charts": "^1.19.0",
     "vue": "^2.5.2",

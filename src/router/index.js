@@ -20,14 +20,15 @@ import upload from '@/components/page/upload';
 import pay from '@/components/page/pay';
 import payment from '@/components/page/payment';
 import searchresult from '@/components/page/searchResult';
+import searchresultaudio from '@/components/page/searchResultAudio';
 import about from '@/components/page/about';
 import about_yszc from '@/components/page/about_yszc';
 import loopplay from '@/components/page/loopplay';
 import payment_suc from '@/components/page/payment_suc';
 import payment_err from '@/components/page/payment_err';
-import dev from '@/components/page/dev';
+import dev from '@/components/dev/dev';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [{
@@ -111,6 +112,10 @@ export default new Router({
     path: '/searchresult',
     name: 'searchresult',
     component: searchresult
+  },  {
+    path: '/searchresultaudio',
+    name: 'searchresultaudio',
+    component: searchresultaudio
   }, {
     path: '/about',
     name: 'about',
