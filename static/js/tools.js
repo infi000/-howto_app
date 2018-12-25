@@ -1,12 +1,12 @@
-// // 正式
-// var URL_DEV = {
-//   yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi/index.php?',
-//   // yjw: 'http://192.168.58.21/howto/index.php?',
-//   jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi/i.php?',
-//   upload: 'http://upload.howdu.cn', //视频服务器
-//   video: 'http://video.howdu.cn', //视频服务器
-//   img: 'http://www.howdu.cn/howapi', //图片服务器
-// };
+// 正式
+var URL_DEV = {
+  yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi/index.php?',
+  // yjw: 'http://192.168.58.21/howto/index.php?',
+  jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi/i.php?',
+  upload: 'http://upload.howdu.cn', //视频服务器
+  video: 'http://video.howdu.cn', //视频服务器
+  img: 'http://www.howdu.cn/howapi', //图片服务器
+};
 
 // // 测试2 微信端用
 // var URL_DEV = {
@@ -18,14 +18,14 @@
 // };
 
 
-// // app测试
-var URL_DEV = {
-  yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi_test/index.php?',
-  jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi_test/i.php?',
-  upload: 'http://upload.howdu.cn', //视频服务器
-  video: 'http://video.howdu.cn', //视频服务器
-  img: 'http://www.howdu.cn/howapi', //图片服务器
-};
+// // // app测试
+// var URL_DEV = {
+//   yjw: 'https://xcx-howdu.yaotv.tvm.cn/howapi_test/index.php?',
+//   jys: 'https://xcx-howdu.yaotv.tvm.cn/wapi_test/i.php?',
+//   upload: 'http://upload.howdu.cn', //视频服务器
+//   video: 'http://video.howdu.cn', //视频服务器
+//   img: 'http://www.howdu.cn/howapi', //图片服务器
+// };
 
 
 // m=Home&c=&a=

@@ -26,7 +26,7 @@ import domVideoboxw from "@/components/widget/videoboxw";
 import domSearch from "@/components/widget/search";
 import domHeader from "@/components/widget/header-back";
 import domNodata from "@/components/widget/nodata";
-import Swiper from "swiper";
+// import Swiper from "swiper";
 import { Toast } from 'mint-ui';
 
 export default {

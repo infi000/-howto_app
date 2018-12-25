@@ -47,7 +47,7 @@
 <script>
 /*jshint esversion: 6 */
 import loadingPage from "@/components/widget/loading";
-import Swiper from "swiper";
+// import Swiper from "swiper";
 import playbtn from "@/assets/play_btn.png";
 import domVideoboxh from "@/components/widget/videoboxh";
 import domHeader from "@/components/widget/header-back";

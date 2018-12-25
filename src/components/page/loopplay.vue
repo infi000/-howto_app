@@ -47,7 +47,7 @@
 // import aa from "@/components/widget/videoboxrank";
 import domHeader from "@/components/widget/header-back";
 
-import Swiper from "swiper";
+// import Swiper from "swiper";
 import domNodata from "@/components/widget/nodata";
 import loadingPage from "@/components/widget/loading";
 

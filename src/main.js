@@ -7,7 +7,7 @@ import store from './vuex/store';
 import Vuex from 'vuex';
 // import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import 'swiper/dist/css/swiper.min.css'
+// import 'swiper/dist/css/swiper.min.css'
 import { Toast, InfiniteScroll, Lazyload, Header, Spinner, Progress ,Radio} from 'mint-ui';
 import searchResultAudio from '@/components/page/searchResultAudio'
 

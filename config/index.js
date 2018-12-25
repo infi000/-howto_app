@@ -53,8 +53,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/frontapp_test/',
-    // assetsPublicPath: '/frontapp/',
+    // assetsPublicPath: '/frontapp_test/',
+    assetsPublicPath: '/frontapp/',
 
     /**
      * Source Maps
