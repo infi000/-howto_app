@@ -102,7 +102,7 @@
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.uv" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>抖音</span></div>
     </div>
-       <div class="weui-flex me-con-2" @click="goto('dev')" v-if="true">
+       <div class="weui-flex me-con-2" @click="goto('dev')" v-if="false">
       <div class="me-con-2-l"><img slot="icon" :src="imgSrc.uv" height="100%" class="mt-cell-img"></div>
       <div class="weui-flex__item text-left"><span>语音</span></div>
     </div>

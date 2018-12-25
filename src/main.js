@@ -8,13 +8,15 @@ import Vuex from 'vuex';
 // import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'swiper/dist/css/swiper.min.css'
-import { Toast, InfiniteScroll, Lazyload, Header, Spinner, Progress } from 'mint-ui';
+import { Toast, InfiniteScroll, Lazyload, Header, Spinner, Progress ,Radio} from 'mint-ui';
+import searchResultAudio from '@/components/page/searchResultAudio'
+
 
 Vue.component(Spinner.name, Spinner);
 Vue.component(Header.name, Header);
 Vue.component(Progress.name, Progress);
 Vue.component(Header.name, Header);
-
+Vue.component(Radio.name, Radio);
 Vue.use(Lazyload);
 Vue.use(InfiniteScroll);
 // Vue.use(Toast);
@@ -88,10 +90,11 @@ window.payment_app = function(s) {
 
 //录音结束app方面调用我的接口
 window.recordStop=function(opt){
-      Toast({
-        message: opt,
-        position: 'top',
-        duration: 5000
-      });
+      // Toast({
+      //   message: opt,
+      //   position: 'top',
+      //   duration: 5000
+      // });
    store.state.recorderInfo=opt;
+
 };

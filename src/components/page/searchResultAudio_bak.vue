@@ -74,14 +74,26 @@ export default {
 
     },
     handleRec() {
-        window.login.JSStartRecord();
-         this.isRecording = true;
-            this.warningMsg = "搜索中。。。";
+      this.startRecording();
+      this.warningMsg = "搜索中。。。";
     },
     handleSend() {
-      window.login.JSStopRecord();
-       this.isRecording = false;
-      this.warningMsg="录音结束";
+
+
+      var that = this;
+      this.stopRecording();
+      recorder && recorder.exportWAV(function(blob) {
+        that.blob = blob;
+        var reader = new FileReader();
+        reader.onload = function() {
+          var res = reader.result;
+          var base = res.replace(/\+/g, "%2B");
+          var base = res.replace('data:audio/wav;base64,', "");
+          that.getSourceFromAudio(base);
+        };
+        reader.readAsDataURL(blob);
+      });
+      recorder.clear();
     },
     startUserMedia(stream) {
       var input = audio_context.createMediaStreamSource(stream);
@@ -130,21 +142,21 @@ export default {
 
   },
   mounted() {
-    // try {
-    //   // webkit shim
-    //   window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    //   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-    //   window.URL = window.URL || window.webkitURL;
+    try {
+      // webkit shim
+      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+      window.URL = window.URL || window.webkitURL;
 
-    //   audio_context = new AudioContext;
+      audio_context = new AudioContext;
 
-    // } catch (e) {
-    //   alert('No web audio support in this browser!');
-    // }
+    } catch (e) {
+      alert('No web audio support in this browser!');
+    }
 
-    // navigator.getUserMedia({ audio: true }, this.startUserMedia, function(e) {
+    navigator.getUserMedia({ audio: true }, this.startUserMedia, function(e) {
 
-    // });
+    });
   }
 
 };

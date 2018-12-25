@@ -16,7 +16,7 @@
         <div class="weui-dialog__ft">
           <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="goto('home')">返回</a>
           <!-- <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @touchstart="handleRec" @touchend="handleSend" v-if="isRecording">讲话</a> -->
-          <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="handleRec"  v-if="!isRecording">讲话</a>
+          <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="handleRec" v-if="!isRecording">讲话</a>
           <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="handleSend" v-else>结束</a>
         </div>
       </div>
@@ -51,15 +51,16 @@ export default {
       },
       loading: false,
       noData: true,
-
       isRecording: false,
-      blob: null,
-      warningMsg: '讲话时请松开按钮',
+      warningMsg: '',
       show: false, //显示结果
     };
   },
   computed: {
-
+    recorderInfo() {
+      var res = this.$store.state.recorderInfo;
+      return res;
+    }
   },
   methods: {
     goto(url) {
@@ -74,43 +75,25 @@ export default {
 
     },
     handleRec() {
-      this.startRecording();
-      this.warningMsg = "搜索中。。。";
+      window.login.JSStartRecord();
+      this.isRecording = true;
+      this.$store.state.recorderInfo="";
+      this.warningMsg = "开始录音";
+
     },
     handleSend() {
+      window.login.JSStopRecord();
 
-
-      var that = this;
-      this.stopRecording();
-      recorder && recorder.exportWAV(function(blob) {
-        that.blob = blob;
-        var reader = new FileReader();
-        reader.onload = function() {
-          var res = reader.result;
-          var base = res.replace(/\+/g, "%2B");
-          var base = res.replace('data:audio/wav;base64,', "");
-          that.getSourceFromAudio(base);
-        };
-        reader.readAsDataURL(blob);
-      });
-      recorder.clear();
-    },
-    startUserMedia(stream) {
-      var input = audio_context.createMediaStreamSource(stream);
-      recorder = new Recorder(input);
-    },
-    startRecording() {
-      recorder && recorder.record();
-      this.isRecording = true
-    },
-    stopRecording() {
-      recorder && recorder.stop();
+      // window.recordStop("222222222222222");
       this.isRecording = false;
+      this.warningMsg = "搜索中。。";
     },
-    getSourceFromAudio(base) {
+    getSourceFromAudio() {
       var that = this;
+      var base=this.recorderInfo;
       var params = {
-        adata: base
+        adata: base,
+        formart: 'pcm'
       };
       var sucf = function(d) {
         //正确的显示列表
@@ -122,15 +105,18 @@ export default {
       };
       var errf = function(d) {
         //错误的显示请再试一次
-        console.log(d)
         that.warningMsg = d;
         // that.warningMsg = "请大声再说一次!";
       };
-      this.$store.commit('getSourceFromAudio', { params: params, sucf: sucf, errf: errf });
+      that.$store.commit('getSourceFromAudio', { params: params, sucf: sucf, errf: errf });
     }
   },
   watch: {
-
+    recorderInfo(){
+      if(this.recorderInfo){
+        this.getSourceFromAudio();
+      }
+    }
   },
   components: {
     loadingPage,
@@ -142,21 +128,21 @@ export default {
 
   },
   mounted() {
-    try {
-      // webkit shim
-      window.AudioContext = window.AudioContext || window.webkitAudioContext;
-      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
-      window.URL = window.URL || window.webkitURL;
+    // try {
+    //   // webkit shim
+    //   window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    //   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+    //   window.URL = window.URL || window.webkitURL;
 
-      audio_context = new AudioContext;
+    //   audio_context = new AudioContext;
 
-    } catch (e) {
-      alert('No web audio support in this browser!');
-    }
+    // } catch (e) {
+    //   alert('No web audio support in this browser!');
+    // }
 
-    navigator.getUserMedia({ audio: true }, this.startUserMedia, function(e) {
+    // navigator.getUserMedia({ audio: true }, this.startUserMedia, function(e) {
 
-    });
+    // });
   }
 
 };
@@ -170,10 +156,12 @@ export default {
 .dom-videoboxw {
   margin-bottom: 18px;
 }
-.weui-dialog__btn_primary{
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
+
+.weui-dialog__btn_primary {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
 </style>
